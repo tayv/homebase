@@ -157,13 +157,6 @@ declare module 'astro:content' {
   collection: "posts";
   data: InferEntrySchema<"posts">
 } & { render(): Render[".mdx"] };
-"readme/index.mdx": {
-	id: "readme/index.mdx";
-  slug: "readme";
-  body: string;
-  collection: "posts";
-  data: InferEntrySchema<"posts">
-} & { render(): Render[".mdx"] };
 "the-two-react/index.mdx": {
 	id: "the-two-react/index.mdx";
   slug: "the-two-react";
