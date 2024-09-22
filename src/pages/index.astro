@@ -2,15 +2,64 @@
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<link rel="stylesheet" href="../src/styles.css">
-		<title>Homebasef</title>
-	</head>
-	<body>
-		<h1 class="text-3xl font-bold">Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="../src/styles.css" />
+    <title>Homebase</title>
+  </head>
+  <body>
+    <div class="flex flex-col items-center justify-center h-screen">
+      <h1 class="text-3xl font-bold">&lt;Name here&gt;</h1>
+
+      <div class="marquee">
+        <ul class="text-xl marquee-content">
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+        </ul>
+        <ul class="text-xl marquee-content" aria-hidden="true">
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+
+  <style>
+    /* Marquee styles */
+    .marquee {
+      --gap: 1rem;
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      user-select: none;
+      gap: var(--gap);
+    }
+
+    .marquee-content {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-around;
+      gap: var(--gap);
+      min-width: 100%;
+      animation: scroll 5s linear infinite;
+    }
+
+    @keyframes scroll {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(calc(-100% - var(--gap)));
+      }
+    }
+  </style>
 </html>
