@@ -2,14 +2,116 @@
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="../src/styles.css" />
+    <title>Homebase</title>
+  </head>
+  <body>
+    <div class="flex flex-col items-center justify-center h-screen">
+      <h1 class="text-4xl font-bold">&lt;Name here&gt;</h1>
+
+      <!-- marquee starts. todo: make a component -->
+      <div
+        class="flex relative overflow-hidden user-select-none w-full gap-4 py-4"
+      >
+        <ul
+          class="text-lg marquee-content flex flex-shrink-0 justify-around gap-4 min-w-full"
+        >
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+        </ul>
+        <ul
+          class="text-xl marquee-content flex flex-shrink-0 justify-around gap-4 min-w-full"
+          aria-hidden="true"
+        >
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+        </ul>
+      </div>
+      <!-- marquee ends -->
+
+      <!-- newsletter signup starts -->
+      <div class="flex flex-col w-full gap-8 p-8 items-center">
+        <div class="border p-4 w-full max-w-lg">
+          <label for="email" class="block text-sm font-medium text-gray-700"
+            >Email</label
+          >
+          <div class="flex flex-col sm:flex-row w-full gap-1">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="block w-full min-w-36 sm:min-w-72 border-4 border-gray-200 border-t-gray-500 border-l-gray-500 focus:ring-blue-500 focus:border-blue-500 p-2"
+              placeholder="you@example.com"
+            />
+            <button
+              type="submit"
+              class="block w-full sm:max-w-24 bg-gray-900 border border-gray-500 focus:ring-blue-500 focus:border-blue-500 text-white p-2"
+              >Submit</button
+            >
+          </div>
+        </div>
+        <!-- newsletter ends -->
+
+        <!-- secondary content starts -->
+        <div class="grid grid-cols-3 gap-4 p-4">
+          <div class="border p-4">blog</div>
+          <div class="border p-4">
+            <ul>
+              <li>github</li>
+              <li>gitlab</li>
+              <li>figma</li>
+              <li>youtube</li>
+            </ul>
+          </div>
+          <div class="border p-4">another thing</div>
+        </div>
+        <!-- secondary content ends -->
+      </div>
+    </div>
+  </body>
+
+  <style>
+    /* credit https://ryanmulligan.dev/blog/css-marquee/ */
+    /* Marquee styles */
+    /* .marquee {
+     
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      user-select: none;
+      gap: var(--gap);
+      width: 100%;
+    } */
+
+    .marquee-content {
+      --gap: 1rem;
+      /* flex-shrink: 0;
+      display: flex;
+      justify-content: space-around;
+      gap: var(--gap);
+      min-width: 100%; */
+      animation: scroll 15s linear infinite;
+    }
+
+    @keyframes scroll {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(calc(-100% - var(--gap)));
+      }
+    }
+  </style>
 </html>
