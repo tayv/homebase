@@ -1,0 +1,33 @@
+---
+// Renders and styles blog posts in @src/content/blog
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import BlogLayout from '@src/layouts/BlogLayout.astro'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog')
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<'blog'>
+const post = Astro.props;
+const { Content } = await post.render()
+---
+
+<BlogLayout>
+  <article class="">
+    <h1 class="text-3xl font-bold">{post.data.title}</h1>
+    <p class="text-slate-400 py-2"> 
+      published {post.data.publishDate.toDateString().toLowerCase()}, 
+      tags: <span class="font-semibold">{post.data.tags.join(", ").toLowerCase()}</span>
+    </p>
+    <hr />
+    <div class="py-4 markdown-content">
+    <Content />
+  </div>
+  </article>
+</BlogLayout>
+
