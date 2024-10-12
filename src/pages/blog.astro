@@ -14,13 +14,18 @@ const posts = (await getCollection('blog', ({ data }) => {
     <ul class="flex flex-col gap-2">
       {
         posts.map((post) => (
-          <li>
-            <a href={`/blog/${post.slug}/`} class="underline">{post.data.title}</a>
-            <p class="text-slate-400"><a href={`/authors/${post.data.description.toLowerCase()}/`}>{post.data.description}</a>, 
-              published {post.data.publishDate.toDateString()}
-              {/* tags: <strong>{post.data.tags.join(", ")}</strong> */}
+          <li><a href={`/blog/${post.slug}/`} class="hover:text-indigo-600">
+            <h2 class="underline text-2xl ">{post.data.title}</h2>
+            <p class="text-neutral-600 text-sm ">{post.data.description}</p>
+            <p class="text-neutral-600 text-sm">
+              {new Date(post.data.publishDate).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              })}
             </p>
-
+            {/* tags: <strong>{post.data.tags.join(", ")}</strong> */}
+            </a>
           </li>
         ))
       }

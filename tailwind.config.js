@@ -8,7 +8,7 @@ export default {
         ".markdown-content": {
           color: "#4a5568", // gray-700
           h1: {
-            color: "#7f1d1d", // Use the hex value for red-900
+            color: "#4a5568",
             fontSize: "2.25rem",
           },
           p: {
@@ -29,6 +29,3 @@ export default {
     },
   ],
 }
-
-
-
