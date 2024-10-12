@@ -6,16 +6,17 @@
     <meta name="generator" content={Astro.generator} />
     <title>Blog</title>
   </head>
-  <body class="flex flex-col justify-center max-w-2xl mx-auto ">
+  <body class="mx-auto flex max-w-2xl flex-col justify-center">
     <header>
-      <nav class="flex justify-center gap-2 p-4  underline">
-        <a href="/">☆ Home ☆</a> 
+      <nav class="flex justify-center gap-2 p-4 underline">
+        <a href="/">☆ Home ☆</a>
         <span> | </span>
-        <a href="/blog">☆ Blog ☆</a> 
+        <a href="/blog">☆ Blog ☆</a>
       </nav>
     </header>
-    <main class="px-8 py-4 max-w-2xl mx-auto">
-      <slot />  <!-- Blog posts go here -->
+    <main class="mx-auto max-w-2xl px-8 py-4">
+      <slot />
+      <!-- Blog posts go here -->
     </main>
   </body>
 </html>
