@@ -6,13 +6,33 @@ export default {
     function addBlogPostStyles({ addComponents }) {
       addComponents({
         ".markdown-content": {
-          color: "#4a5568", // gray-700
+          // color: "#4a5568", // gray-700
           h1: {
-            color: "#4a5568",
+            // color: "#4a5568",
             fontSize: "2.25rem",
+          },
+          h2: {
+            fontSize: "1.75rem",
+          },
+          h3: {
+            fontSize: "1.5rem",
+          },
+          h4: {
+            fontSize: "1.25rem",
           },
           p: {
             marginBottom: "1.5em",
+            lineHeight: "1.65",
+          },
+          li: {
+            listStyleType: "none", // Remove default bullets
+            paddingLeft: "0.5em",
+            marginBottom: "0.25em",
+            "&:before": {
+              content: "'☆'", // Custom bullet symbol
+              marginRight: "0.5em", // Space between bullet and text
+              // color: "#e74c3c", // Color for the bullet symbol
+            },
           },
           blockquote: {
             fontStyle: "italic",
