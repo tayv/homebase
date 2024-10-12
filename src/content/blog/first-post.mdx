@@ -1,0 +1,20 @@
+---
+title: "My First Blog Post"
+description: "A description of my first blog post"
+tags: ["astro", "tailwind", "webdev"]
+image: { src: "/path", alt: "alt text" }
+publishDate: 2024-09-29
+---
+
+import { Image } from "astro:assets"
+
+# Hello world
+
+<Image
+  src="/src/images/homebase_Oct2024_1.gif"
+  alt="overview of october 2024 site design iteration"
+  width={800}
+  height="100%"
+  class="border-4 border-slate-900 shadow-lg"
+/>
+{/* auto height to maintain aspect ratio */}
