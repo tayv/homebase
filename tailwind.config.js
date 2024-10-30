@@ -5,6 +5,13 @@ export default {
   plugins: [
     function addBlogPostStyles({ addComponents }) {
       addComponents({
+        ".generic-link": {
+          textDecoration: "underline",
+          "&:hover": {
+            color: "#4f46e5", // Change to indigo-600 on hover
+            textDecoration: "underline",
+          },
+        },
         ".markdown-content": {
           // color: "#4a5568", // gray-700
           h1: {
