@@ -28,7 +28,7 @@ export default {
             fontSize: "1.25rem",
           },
           p: {
-            marginBottom: "1.5em",
+            marginBottom: "0.75em",
             lineHeight: "1.65",
           },
           li: {
@@ -45,6 +45,8 @@ export default {
             fontStyle: "italic",
             borderLeft: "4px solid #a0aec0", // gray-500
             paddingLeft: "1em",
+            marginTop: "1em",
+            marginBottom: "1em",
           },
           code: {
             backgroundColor: "#edf2f7", // gray-100
