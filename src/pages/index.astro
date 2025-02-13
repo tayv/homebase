@@ -1,5 +1,6 @@
 ---
-
+import { ViewTransitions } from "astro:transitions"
+import GlitchImage from "../components/GlitchImage.astro"
 ---
 
 <html lang="en">
@@ -30,12 +31,23 @@
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>Homebase by Taylor</title>
+    <ViewTransitions />
   </head>
-  <body class="">
-    <div class="flex h-screen flex-col items-center justify-center">
-      <h1 class="text-4xl font-bold">&lt;Name here&gt;</h1>
+  <body class="bg-black text-white">
+    <GlitchImage
+      src="/src/images/bg-image.jpeg"
+      alt="Pink clouds in a dreamy sky"
+      layers={7}
+      className="-z-50"
+    />
+    <div
+      class="relative z-10 flex min-h-screen flex-col items-center justify-center p-4"
+    >
+      <div class="glitch-wrapper">
+        <div class="glitch" data-text="<Name here>">&lt;Name here&gt;</div>
+      </div>
 
-      <!-- marquee starts. todo: make a component -->
+      <!-- marquee starts -->
       <div
         class="user-select-none relative flex w-full gap-4 overflow-hidden py-4"
       >
@@ -63,10 +75,9 @@
 
       <!-- newsletter signup starts -->
       <div class="flex w-full flex-col items-center gap-8 p-8">
-        <div class="w-full max-w-lg border border-dashed p-4">
+        <div class="w-full max-w-lg border border-dashed border-white/50 p-4">
           <h3 class="text-center">Join the newsletter</h3>
-
-          <label for="email" class="block text-sm font-medium text-gray-700"
+          <label for="email" class="block text-sm font-medium text-gray-300"
             >Email</label
           >
           <div class="flex w-full flex-col gap-1 sm:flex-row">
@@ -75,24 +86,23 @@
               id="email"
               name="email"
               required
-              class="block w-full min-w-36 border-4 border-gray-200 border-l-gray-500 border-t-gray-500 p-2 focus:border-blue-500 focus:ring-blue-500 sm:min-w-72"
+              class="block w-full min-w-36 border-4 border-gray-700 border-l-gray-500 border-t-gray-500 bg-black p-2 text-white focus:border-blue-500 focus:ring-blue-500 sm:min-w-72"
               placeholder="you@example.com"
             />
             <button
               type="submit"
-              class="block w-full border border-gray-500 bg-gray-900 p-2 text-white focus:border-blue-500 focus:ring-blue-500 sm:max-w-24"
+              class="glitch-button block w-full border border-white/50 bg-white/10 p-2 text-white hover:bg-white/20 focus:border-blue-500 focus:ring-blue-500 sm:max-w-24"
               >Submit</button
             >
           </div>
         </div>
-        <!-- newsletter ends -->
 
         <!-- secondary content starts -->
         <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-3">
-          <div class="border p-5">
+          <div class="border border-white/30 p-5 backdrop-blur-sm">
             <a class="generic-link" href="/blog">blog</a>
           </div>
-          <div class="border p-5">
+          <div class="border border-white/30 p-5 backdrop-blur-sm">
             <ul>
               <li>github</li>
               <li>gitlab</li>
@@ -100,33 +110,16 @@
               <li>youtube</li>
             </ul>
           </div>
-          <div class="border p-5">another thing</div>
+          <div class="border border-white/30 p-5 backdrop-blur-sm">
+            another thing
+          </div>
         </div>
-        <!-- secondary content ends -->
       </div>
     </div>
-  </body>
-
-  <style>
-    /* credit https://ryanmulligan.dev/blog/css-marquee/ */
-    /* Marquee styles */
-    /* .marquee {
-     
-      position: relative;
-      display: flex;
-      overflow: hidden;
-      user-select: none;
-      gap: var(--gap);
-      width: 100%;
-    } */
-
+  </body><style>
+    /* Marquee animation */
     .marquee-content {
       --gap: 1rem;
-      /* flex-shrink: 0;
-      display: flex;
-      justify-content: space-around;
-      gap: var(--gap);
-      min-width: 100%; */
       animation: scroll 15s linear infinite;
     }
 
@@ -137,6 +130,200 @@
       to {
         transform: translateX(calc(-100% - var(--gap)));
       }
+    }
+
+    /* Glitch effect */
+    .glitch-wrapper {
+      width: 100%;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: black;
+    }
+
+    .glitch {
+      position: relative;
+      font-size: 40px;
+      font-weight: bold;
+      color: #ffffff;
+      letter-spacing: 3px;
+      z-index: 1;
+    }
+
+    .glitch:before,
+    .glitch:after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+    }
+
+    .glitch:before {
+      left: 2px;
+      text-shadow: -2px 0 #ff00c1;
+      clip: rect(24px, 550px, 90px, 0);
+      animation: glitch-anim-2 8s infinite linear alternate-reverse;
+    }
+
+    .glitch:after {
+      left: -2px;
+      text-shadow: -2px 0 #00fff9;
+      clip: rect(85px, 550px, 140px, 0);
+      animation: glitch-anim 7s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% {
+        clip: rect(11px, 9999px, 82px, 0);
+      }
+      5% {
+        clip: rect(96px, 9999px, 95px, 0);
+      }
+      10% {
+        clip: rect(89px, 9999px, 75px, 0);
+      }
+      15% {
+        clip: rect(45px, 9999px, 46px, 0);
+      }
+      20% {
+        clip: rect(57px, 9999px, 72px, 0);
+      }
+      25% {
+        clip: rect(79px, 9999px, 49px, 0);
+      }
+      30% {
+        clip: rect(26px, 9999px, 31px, 0);
+      }
+      35% {
+        clip: rect(34px, 9999px, 10px, 0);
+      }
+      40% {
+        clip: rect(96px, 9999px, 98px, 0);
+      }
+      45% {
+        clip: rect(91px, 9999px, 85px, 0);
+      }
+      50% {
+        clip: rect(80px, 9999px, 100px, 0);
+      }
+      55% {
+        clip: rect(3px, 9999px, 93px, 0);
+      }
+      60% {
+        clip: rect(89px, 9999px, 45px, 0);
+      }
+      65% {
+        clip: rect(89px, 9999px, 46px, 0);
+      }
+      70% {
+        clip: rect(83px, 9999px, 42px, 0);
+      }
+      75% {
+        clip: rect(41px, 9999px, 73px, 0);
+      }
+      80% {
+        clip: rect(33px, 9999px, 39px, 0);
+      }
+      85% {
+        clip: rect(38px, 9999px, 46px, 0);
+      }
+      90% {
+        clip: rect(56px, 9999px, 99px, 0);
+      }
+      95% {
+        clip: rect(24px, 9999px, 71px, 0);
+      }
+      100% {
+        clip: rect(53px, 9999px, 47px, 0);
+      }
+    }
+
+    @keyframes glitch-anim-2 {
+      0% {
+        clip: rect(65px, 9999px, 99px, 0);
+      }
+      5% {
+        clip: rect(86px, 9999px, 29px, 0);
+      }
+      10% {
+        clip: rect(34px, 9999px, 89px, 0);
+      }
+      15% {
+        clip: rect(100px, 9999px, 7px, 0);
+      }
+      20% {
+        clip: rect(96px, 9999px, 54px, 0);
+      }
+      25% {
+        clip: rect(69px, 9999px, 22px, 0);
+      }
+      30% {
+        clip: rect(6px, 9999px, 69px, 0);
+      }
+      35% {
+        clip: rect(11px, 9999px, 56px, 0);
+      }
+      40% {
+        clip: rect(84px, 9999px, 98px, 0);
+      }
+      45% {
+        clip: rect(88px, 9999px, 52px, 0);
+      }
+      50% {
+        clip: rect(23px, 9999px, 77px, 0);
+      }
+      55% {
+        clip: rect(45px, 9999px, 88px, 0);
+      }
+      60% {
+        clip: rect(36px, 9999px, 85px, 0);
+      }
+      65% {
+        clip: rect(75px, 9999px, 89px, 0);
+      }
+      70% {
+        clip: rect(73px, 9999px, 92px, 0);
+      }
+      75% {
+        clip: rect(100px, 9999px, 98px, 0);
+      }
+      80% {
+        clip: rect(26px, 9999px, 87px, 0);
+      }
+      85% {
+        clip: rect(68px, 9999px, 87px, 0);
+      }
+      90% {
+        clip: rect(23px, 9999px, 87px, 0);
+      }
+      95% {
+        clip: rect(17px, 9999px, 52px, 0);
+      }
+      100% {
+        clip: rect(53px, 9999px, 88px, 0);
+      }
+    }
+
+    /* Glitch button effect */
+    .glitch-button {
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .glitch-button:hover {
+      text-shadow:
+        0.05em 0 0 rgba(255, 0, 0, 0.75),
+        -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+        0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+    }
+
+    .glitch-button:hover span {
+      animation: glitch 500ms infinite;
     }
   </style>
 </html>

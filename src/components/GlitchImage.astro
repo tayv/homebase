@@ -1,0 +1,94 @@
+---
+interface Props {
+  src: string
+  alt: string
+  layers?: number
+  offset?: number
+  className?: string
+}
+
+const { src, alt, layers = 6, offset = 4, className = "" } = Astro.props
+
+// Define shift presets for horizontal glitch effect with more extreme values
+const shiftPresets = [-75, 60, -45, 80, -60, 45, -90, 70]
+
+// Generate values for each layer with randomization
+const layerEffects = Array.from({ length: layers * 2 }).map(() => {
+  // Pick a random shift preset
+  const baseShift =
+    shiftPresets[Math.floor(Math.random() * shiftPresets.length)]
+  const randomShift = baseShift + (Math.random() * 70 - 35) // ±35px variation
+
+  return {
+    shift: randomShift,
+  }
+})
+---
+
+<div
+  class:list={["glitch-container fixed inset-0 h-screen w-screen", className]}
+>
+  <!-- Base image layer -->
+  <img
+    src={src}
+    alt={alt}
+    class="absolute inset-0 h-full w-full object-cover"
+    style={{
+      filter: "contrast(1.2) brightness(1.1)",
+    }}
+  />
+
+  <!-- Static noise overlay -->
+  <div class="noise absolute inset-0 opacity-50 mix-blend-soft-light"></div>
+
+  <!-- Stacked layers -->
+  {
+    Array.from({ length: layers * 2 }).map((_, index) => {
+      const effect = layerEffects[index]
+      return (
+        <div
+          class="absolute left-0 right-0 w-full mix-blend-normal"
+          style={{
+            top: `${(index * 100) / (layers * 2)}%`,
+            height: `${100 / (layers * 2)}%`,
+            zIndex: index + 1,
+            overflow: "hidden",
+          }}
+        >
+          <div
+            class="absolute -left-[25vw] h-full w-[150vw]"
+            style={{
+              transform: `translateX(${effect.shift}px)`,
+            }}
+          >
+            <img
+              src={src}
+              aria-hidden="true"
+              class="h-full w-full object-cover"
+              style={{
+                objectPosition: `center ${(index * 100) / (layers * 2)}%`,
+              }}
+            />
+          </div>
+        </div>
+      )
+    })
+  }
+</div>
+
+<style>
+  .glitch-container {
+    isolation: isolate;
+  }
+
+  .glitch-container::before,
+  .glitch-container::after {
+    display: none;
+  }
+
+  .noise {
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    filter: contrast(300%) brightness(100%);
+    pointer-events: none;
+  }
+</style>
