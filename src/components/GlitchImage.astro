@@ -10,12 +10,12 @@ interface Props {
 const { src, alt, layers = 20, offset = 4, className = "" } = Astro.props
 
 // Define dramatic shift presets for glitch effect
-const shiftPresets = [-120, 80, -90, 100, -70, 85, -110, 95]
+const shiftPresets = [-60, 45, -50, 55, -40, 45, -55, 50]
 
 // Generate values for each layer
 const layerEffects = Array.from({ length: layers * 2 }).map((_, index) => {
   const baseShift = shiftPresets[index % shiftPresets.length]
-  const randomShift = baseShift + (Math.random() * 40 - 20) // ±20px variation
+  const randomShift = baseShift + (Math.random() * 10 - 5) // ±5px variation
 
   return {
     shift: randomShift,
