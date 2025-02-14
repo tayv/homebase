@@ -7,20 +7,20 @@ interface Props {
   className?: string
 }
 
-const { src, alt, layers = 6, offset = 4, className = "" } = Astro.props
+const { src, alt, layers = 20, offset = 4, className = "" } = Astro.props
 
-// Define shift presets for horizontal glitch effect with more extreme values
-const shiftPresets = [-75, 60, -45, 80, -60, 45, -90, 70]
+// Define dramatic shift presets for glitch effect
+const shiftPresets = [-120, 80, -90, 100, -70, 85, -110, 95]
 
-// Generate values for each layer with randomization
-const layerEffects = Array.from({ length: layers * 2 }).map(() => {
-  // Pick a random shift preset
-  const baseShift =
-    shiftPresets[Math.floor(Math.random() * shiftPresets.length)]
-  const randomShift = baseShift + (Math.random() * 70 - 35) // ±35px variation
+// Generate values for each layer
+const layerEffects = Array.from({ length: layers * 2 }).map((_, index) => {
+  const baseShift = shiftPresets[index % shiftPresets.length]
+  const randomShift = baseShift + (Math.random() * 40 - 20) // ±20px variation
 
   return {
     shift: randomShift,
+    top: (index * 100) / (layers * 2),
+    height: 100 / (layers * 2),
   }
 })
 ---
@@ -38,42 +38,43 @@ const layerEffects = Array.from({ length: layers * 2 }).map(() => {
     }}
   />
 
-  <!-- Static noise overlay -->
-  <div class="noise absolute inset-0 opacity-50 mix-blend-soft-light"></div>
-
   <!-- Stacked layers -->
   {
-    Array.from({ length: layers * 2 }).map((_, index) => {
-      const effect = layerEffects[index]
-      return (
+    layerEffects.map((effect, index) => (
+      <div
+        class="absolute left-0 right-0 w-full mix-blend-normal"
+        style={{
+          top: `${effect.top}%`,
+          height: `${effect.height}%`,
+          zIndex: index + 1,
+          overflow: "hidden",
+        }}
+      >
         <div
-          class="absolute left-0 right-0 w-full mix-blend-normal"
+          class="absolute -left-[25vw] h-full w-[150vw]"
           style={{
-            top: `${(index * 100) / (layers * 2)}%`,
-            height: `${100 / (layers * 2)}%`,
-            zIndex: index + 1,
-            overflow: "hidden",
+            transform: `translateX(${effect.shift}px)`,
           }}
         >
-          <div
-            class="absolute -left-[25vw] h-full w-[150vw]"
+          <img
+            src={src}
+            aria-hidden="true"
+            class="h-full w-full object-cover"
             style={{
-              transform: `translateX(${effect.shift}px)`,
+              objectPosition: `center ${effect.top}%`,
             }}
-          >
-            <img
-              src={src}
-              aria-hidden="true"
-              class="h-full w-full object-cover"
-              style={{
-                objectPosition: `center ${(index * 100) / (layers * 2)}%`,
-              }}
-            />
-          </div>
+          />
         </div>
-      )
-    })
+      </div>
+    ))
   }
+
+  <!-- Static noise overlay (moved to top) -->
+  <div
+    class="noise absolute inset-0 opacity-50 mix-blend-soft-light"
+    style={{ zIndex: layers * 2 + 1 }}
+  >
+  </div>
 </div>
 
 <style>
