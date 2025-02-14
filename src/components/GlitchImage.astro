@@ -72,7 +72,7 @@ const generateLayerEffects = (layerCount: number): LayerEffect[] => {
 const layerEffects = generateLayerEffects(layers)
 ---
 
-<div class="glitch-wrapper fixed inset-0 h-screen w-screen">
+<div class="glitch-wrapper fixed inset-0 h-screen w-screen overscroll-contain">
   <div class:list={["glitch-container h-full w-full", className]}>
     <!-- Base image layer -->
     <img
