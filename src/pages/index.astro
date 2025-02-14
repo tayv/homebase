@@ -1,6 +1,7 @@
 ---
 import { ViewTransitions } from "astro:transitions"
 import GlitchImage from "../components/GlitchImage.astro"
+import bgImage from "../images/bg-image.jpeg"
 ---
 
 <html lang="en">
@@ -36,7 +37,7 @@ import GlitchImage from "../components/GlitchImage.astro"
   <body class="bg-black text-white">
     <div class="fixed inset-0 -z-50">
       <GlitchImage
-        src="/src/images/bg-image.jpeg"
+        src={bgImage}
         alt="Pink clouds in a dreamy sky"
         layers={9}
         minSliceHeight={80}
