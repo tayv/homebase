@@ -1,95 +1,212 @@
 ---
 interface Props {
+  /** Source URL of the image */
   src: string
+  /** Alt text for accessibility */
   alt: string
+  /** Number of glitch effect layers (min: 1, max: 50) */
   layers?: number
+  /** Pixel offset for the glitch effect (min: 1, max: 20) */
   offset?: number
+  /** Additional CSS classes */
   className?: string
+  /** Enable/disable scroll-based animation */
+  enableScrollEffect?: boolean
+  /** Minimum height for each glitch slice (in pixels) */
+  minSliceHeight?: number
 }
 
-const { src, alt, layers = 20, offset = 4, className = "" } = Astro.props
+const {
+  src,
+  alt,
+  layers: rawLayers = 20,
+  offset: rawOffset = 4,
+  className = "",
+  enableScrollEffect = true,
+  minSliceHeight = 30,
+} = Astro.props
+
+// Validate and clamp values
+const layers = Math.max(1, Math.min(50, rawLayers))
+const offset = Math.max(1, Math.min(20, rawOffset))
 
 // Define dramatic shift presets for glitch effect
-const shiftPresets = [-60, 45, -50, 55, -40, 45, -55, 50]
+const shiftPresets = [-60, 45, -50, 55, -40, 45, -55, 50] as const
+type ShiftPreset = (typeof shiftPresets)[number]
 
-// Generate values for each layer
-const layerEffects = Array.from({ length: layers * 2 }).map((_, index) => {
-  const baseShift = shiftPresets[index % shiftPresets.length]
-  const randomShift = baseShift + (Math.random() * 10 - 5) // ±5px variation
+interface LayerEffect {
+  shift: number
+  top: number
+  height: number
+}
 
-  return {
-    shift: randomShift,
-    top: (index * 100) / (layers * 2),
-    height: 100 / (layers * 2),
-  }
-})
+// Calculate the minimum number of layers based on viewport height and minimum slice height
+const calculateOptimalLayers = (layerCount: number): number => {
+  const viewportHeight =
+    typeof window !== "undefined" ? window.innerHeight : 800
+  const maxLayers = Math.floor(viewportHeight / minSliceHeight)
+  return Math.min(layerCount, maxLayers)
+}
+
+// Memoize layer effects calculation for better performance
+const generateLayerEffects = (layerCount: number): LayerEffect[] => {
+  const optimalLayers = calculateOptimalLayers(layerCount)
+  return Array.from({ length: optimalLayers * 2 }).map((_, index) => {
+    const baseShift = shiftPresets[index % shiftPresets.length]
+    const randomShift = baseShift + (Math.random() * 10 - 5) // ±5px variation
+    const top = (index * 100) / (optimalLayers * 2)
+
+    return {
+      shift: randomShift,
+      top,
+      height: Math.max(100 / (optimalLayers * 2), minSliceHeight / 8),
+    }
+  })
+}
+
+const layerEffects = generateLayerEffects(layers)
 ---
 
-<div
-  class:list={["glitch-container fixed inset-0 h-screen w-screen", className]}
->
-  <!-- Base image layer -->
-  <img
-    src={src}
-    alt={alt}
-    class="absolute inset-0 h-full w-full object-cover"
-    style={{
-      filter: "contrast(1.2) brightness(1.1)",
-    }}
-  />
+<div class="glitch-wrapper fixed inset-0 h-screen w-screen">
+  <div class:list={["glitch-container h-full w-full", className]}>
+    <!-- Base image layer -->
+    <img
+      src={src}
+      alt={alt}
+      loading="eager"
+      decoding="async"
+      class="contrast-120 absolute inset-0 h-full w-full object-cover brightness-110"
+      onerror="this.classList.add('error')"
+    />
 
-  <!-- Stacked layers -->
-  {
-    layerEffects.map((effect, index) => (
-      <div
-        class="absolute left-0 right-0 w-full mix-blend-normal"
-        style={{
-          top: `${effect.top}%`,
-          height: `${effect.height}%`,
-          zIndex: index + 1,
-          overflow: "hidden",
-        }}
-      >
-        <div
-          class="absolute -left-[25vw] h-full w-[150vw]"
-          style={{
-            transform: `translateX(${effect.shift}px)`,
-          }}
-        >
-          <img
-            src={src}
-            aria-hidden="true"
-            class="h-full w-full object-cover"
+    <!-- Stacked layers -->
+    <div
+      class="glitch-layers relative h-full"
+      data-enable-scroll={enableScrollEffect}
+    >
+      {
+        layerEffects.map((effect, index) => (
+          <div
+            class="glitch-slice absolute left-0 right-0 w-full"
+            data-index={index}
             style={{
-              objectPosition: `center ${effect.top}%`,
+              top: `${effect.top}%`,
+              height: `${effect.height}%`,
+              overflow: "hidden",
+              "--delay": `${index * 0.1}s`,
+              "--shift": `${effect.shift}px`,
+              "--layer-index": index,
             }}
-          />
-        </div>
-      </div>
-    ))
-  }
+          >
+            <div
+              class="glitch-inner absolute -left-[25vw] h-full w-[150vw]"
+              style={{
+                transform: `translateX(var(--shift))`,
+              }}
+            >
+              <img
+                src={src}
+                aria-hidden="true"
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover"
+                style={{
+                  objectPosition: `center ${effect.top}%`,
+                }}
+                onerror="this.classList.add('error')"
+              />
+            </div>
+          </div>
+        ))
+      }
+    </div>
 
-  <!-- Static noise overlay (moved to top) -->
-  <div
-    class="noise absolute inset-0 opacity-50 mix-blend-soft-light"
-    style={{ zIndex: layers * 2 + 1 }}
-  >
+    <!-- Static noise overlay -->
+    <div class="noise absolute inset-0 opacity-50 mix-blend-soft-light"></div>
   </div>
 </div>
 
+<script>
+  let ticking = false
+
+  function updateGlitch() {
+    const glitchLayers = document.querySelector(".glitch-layers")
+    const isEnabled =
+      glitchLayers?.getAttribute("data-enable-scroll") === "true"
+
+    if (!isEnabled) {
+      ticking = false
+      return
+    }
+
+    const scrollPercent =
+      window.scrollY /
+      (document.documentElement.scrollHeight - window.innerHeight)
+    const slices = document.querySelectorAll(".glitch-slice")
+
+    slices.forEach((slice) => {
+      const element = slice as HTMLElement
+      const index = parseInt(element.dataset.index || "0")
+      const isEven = index % 2 === 0
+      const offset = Math.sin(scrollPercent * Math.PI * 2) * 8
+      const translateX = isEven ? offset : -offset
+      element.style.transform = `translateX(${translateX}px)`
+    })
+
+    ticking = false
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateGlitch)
+        ticking = true
+      }
+    },
+    { passive: true }
+  )
+
+  // Initial call to set correct state
+  updateGlitch()
+</script>
+
 <style>
+  .glitch-wrapper {
+    @apply -z-10;
+  }
+
   .glitch-container {
-    isolation: isolate;
+    @apply relative isolate;
   }
 
   .glitch-container::before,
   .glitch-container::after {
-    display: none;
+    @apply hidden;
   }
 
   .noise {
     background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    filter: contrast(300%) brightness(100%);
-    pointer-events: none;
+    @apply pointer-events-none brightness-100 contrast-[300%];
+  }
+
+  .glitch-slice {
+    @apply min-h-[30px] transition-transform duration-200 ease-out;
+    will-change: transform;
+  }
+
+  .glitch-inner {
+    will-change: transform;
+    min-height: inherit;
+  }
+
+  /* Error state styling */
+  img.error {
+    @apply opacity-50 grayscale;
+  }
+
+  img.error::after {
+    content: "Failed to load image";
+    @apply absolute inset-0 flex items-center justify-center bg-black/50 text-white;
   }
 </style>

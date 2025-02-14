@@ -34,12 +34,14 @@ import GlitchImage from "../components/GlitchImage.astro"
     <ViewTransitions />
   </head>
   <body class="bg-black text-white">
-    <GlitchImage
-      src="/src/images/bg-image.jpeg"
-      alt="Pink clouds in a dreamy sky"
-      layers={9}
-      className="-z-50"
-    />
+    <div class="fixed inset-0 -z-50">
+      <GlitchImage
+        src="/src/images/bg-image.jpeg"
+        alt="Pink clouds in a dreamy sky"
+        layers={9}
+        minSliceHeight={80}
+      />
+    </div>
     <div
       class="relative z-10 flex min-h-screen flex-col items-center justify-center p-4"
     >
