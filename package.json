@@ -6,10 +6,12 @@
   "packageManager": "pnpm@9.11.0",
   "scripts": {
     "dev": "astro dev",
+    "dev:mobile": "astro dev --host 0.0.0.0 --port 4321",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "kill:dev": "lsof -ti :4321 | xargs kill -9"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.8",
