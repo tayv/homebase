@@ -79,7 +79,7 @@ import bgImage from "../images/bg-image.jpeg"
 
       <!-- newsletter signup starts -->
       <div class="flex w-full flex-col items-center gap-8 p-8">
-        <div class="w-full max-w-lg border border-dashed border-white/50 p-4">
+        <div class="scanline-container w-full max-w-lg">
           <h3 class="text-center">Join the newsletter</h3>
           <label for="email" class="block text-sm font-medium text-gray-300"
             >Email</label
@@ -103,10 +103,10 @@ import bgImage from "../images/bg-image.jpeg"
 
         <!-- secondary content starts -->
         <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-3">
-          <div class="border border-white/30 p-5 backdrop-blur-sm">
+          <div class="scanline-container">
             <a class="generic-link" href="/blog">blog</a>
           </div>
-          <div class="border border-white/30 p-5 backdrop-blur-sm">
+          <div class="scanline-container">
             <ul>
               <li>github</li>
               <li>gitlab</li>
@@ -114,9 +114,7 @@ import bgImage from "../images/bg-image.jpeg"
               <li>youtube</li>
             </ul>
           </div>
-          <div class="border border-white/30 p-5 backdrop-blur-sm">
-            another thing
-          </div>
+          <div class="scanline-container">another thing</div>
         </div>
       </div>
     </div>
@@ -260,6 +258,42 @@ import bgImage from "../images/bg-image.jpeg"
 
     .glitch-button:hover span {
       animation: glitch 500ms infinite;
+    }
+
+    /* Text shadow utility for better contrast */
+    .text-shadow {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Scanline container matching glitch-wrapper style */
+    .scanline-container {
+      position: relative;
+      padding: 1.25rem;
+      color: white;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .scanline-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .scanline-container > * {
+      position: relative;
+      z-index: 2;
     }
   </style>
 </html>
