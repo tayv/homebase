@@ -137,6 +137,9 @@ const layerEffects = generateLayerEffects(layers)
 
 <script>
   let ticking = false
+  let lastScrollY = window.scrollY
+  let scrollTimeout: number | null = null
+  let isScrolling = false
 
   function updateGlitch() {
     const glitchLayers = document.querySelector(".glitch-layers")
@@ -148,19 +151,54 @@ const layerEffects = generateLayerEffects(layers)
       return
     }
 
-    const scrollPercent =
-      window.scrollY /
-      (document.documentElement.scrollHeight - window.innerHeight)
-    const slices = document.querySelectorAll(".glitch-slice")
+    const currentScrollY = window.scrollY
+    const scrollingDown = currentScrollY > lastScrollY
+    lastScrollY = currentScrollY
 
-    slices.forEach((slice) => {
-      const element = slice as HTMLElement
-      const index = parseInt(element.dataset.index || "0")
-      const isEven = index % 2 === 0
-      const offset = Math.sin(scrollPercent * Math.PI * 2) * 8
-      const translateX = isEven ? offset : -offset
-      element.style.transform = `translateX(${translateX}px)`
-    })
+    // Clear any existing scroll timeout
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout)
+    }
+
+    // Set isScrolling to true and start a new timeout
+    isScrolling = true
+    scrollTimeout = window.setTimeout(() => {
+      isScrolling = false
+      // Trigger one final update when scrolling stops
+      if (scrollingDown) {
+        requestAnimationFrame(updateGlitch)
+      }
+    }, 100) // Reduced to 100ms for better responsiveness
+
+    if (!scrollingDown) {
+      // Reset transforms when scrolling up
+      document.querySelectorAll(".glitch-slice").forEach((slice) => {
+        const element = slice as HTMLElement
+        element.style.transform = "translateX(0px)"
+      })
+      ticking = false
+      return
+    }
+
+    // Only apply the effect if we're not rapidly scrolling
+    if (!isScrolling || scrollingDown) {
+      const scrollPercent =
+        window.scrollY /
+        (document.documentElement.scrollHeight - window.innerHeight)
+      const slices = document.querySelectorAll(".glitch-slice")
+
+      slices.forEach((slice) => {
+        const element = slice as HTMLElement
+        const index = parseInt(element.dataset.index || "0")
+        const isEven = index % 2 === 0
+        // Reduce the offset magnitude during scrolling
+        const offsetMultiplier = isScrolling ? 0.8 : 1
+        const offset =
+          Math.sin(scrollPercent * Math.PI * 2) * 8 * offsetMultiplier
+        const translateX = isEven ? offset : -offset
+        element.style.transform = `translateX(${translateX}px)`
+      })
+    }
 
     ticking = false
   }
@@ -175,6 +213,13 @@ const layerEffects = generateLayerEffects(layers)
     },
     { passive: true }
   )
+
+  // Cleanup function to clear timeout when component is destroyed
+  document.addEventListener("astro:before-swap", () => {
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout)
+    }
+  })
 
   // Initial call to set correct state
   updateGlitch()
