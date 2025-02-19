@@ -1,7 +1,53 @@
 ---
 import { ViewTransitions } from "astro:transitions"
 import GlitchImage from "../components/GlitchImage.astro"
+import CardDialog from "../components/CardDialog.astro"
 import bgImage from "../images/bg-image.jpeg"
+
+const cards = [
+  {
+    id: "card1",
+    title: "Card One",
+    content: "Some interesting content here",
+    imageSrc: "/src/images/test_banner_image.webp",
+    imageAlt: "Card One Image",
+  },
+  {
+    id: "card2",
+    title: "Card Two",
+    content: "More engaging content",
+    imageSrc: "/src/images/test_banner_image.webp",
+    imageAlt: "Card Two Image",
+  },
+  {
+    id: "card3",
+    title: "Card Three",
+    content: "Additional content here",
+    imageSrc: "/src/images/test_banner_image.webp",
+    imageAlt: "Card Three Image",
+  },
+  {
+    id: "card4",
+    title: "Card Four",
+    content: "Even more content",
+    imageSrc: "/src/images/test_banner_image.webp",
+    imageAlt: "Card Four Image",
+  },
+  {
+    id: "card5",
+    title: "Card Five",
+    content: "Interesting stuff here",
+    imageSrc: "/src/images/test_banner_image.webp",
+    imageAlt: "Card Five Image",
+  },
+  {
+    id: "card6",
+    title: "Card Six",
+    content: "Final card content",
+    imageSrc: "/src/images/test_banner_image.webp",
+    imageAlt: "Card Six Image",
+  },
+]
 ---
 
 <html lang="en">
@@ -74,7 +120,7 @@ import bgImage from "../images/bg-image.jpeg"
 
       <!-- newsletter signup starts -->
       <div class="flex w-full flex-col items-center gap-8 p-8">
-        <div class="scanline-container w-full max-w-lg">
+        <div class="scanline-container w-full max-w-lg p-5">
           <h3 class="text-center">Join the newsletter</h3>
           <label for="email" class="block text-sm font-medium text-gray-300"
             >Email</label
@@ -98,10 +144,10 @@ import bgImage from "../images/bg-image.jpeg"
 
         <!-- secondary content starts -->
         <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-3">
-          <div class="scanline-container">
+          <div class="scanline-container p-5">
             <a class="generic-link" href="/blog">blog</a>
           </div>
-          <div class="scanline-container">
+          <div class="scanline-container p-5">
             <ul>
               <li>github</li>
               <li>gitlab</li>
@@ -109,123 +155,114 @@ import bgImage from "../images/bg-image.jpeg"
               <li>youtube</li>
             </ul>
           </div>
-          <div class="scanline-container">another thing</div>
+          <div class="scanline-container p-5">another thing</div>
         </div>
 
         <!-- Card Grid -->
         <div
           class="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3"
         >
-          <div class="scanline-container group overflow-hidden">
-            <div class="relative">
-              <img
-                src="/src/images/test_banner_image.webp"
-                alt="Card One Image"
-                class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
+          {
+            cards.map((card) => (
               <div
-                class="absolute inset-0 bg-gradient-to-br from-pink-500/30 via-purple-500/20 to-blue-500/40 mix-blend-multiply"
+                class="scanline-container group cursor-pointer overflow-hidden p-0"
+                data-card={card.id}
               >
+                <div class="relative">
+                  <img
+                    src={card.imageSrc}
+                    alt={card.imageAlt}
+                    class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-br from-pink-500/30 via-purple-500/20 to-blue-500/40 mix-blend-multiply" />
+                </div>
+                <div class="relative z-10 -mt-16 p-4 pt-20">
+                  <h3 class="mb-2 text-xl font-bold">{card.title}</h3>
+                  <p class="text-gray-300">{card.content}</p>
+                </div>
               </div>
-            </div>
-            <div class="relative z-10 -mt-16 p-4 pt-20">
-              <h3 class="mb-2 text-xl font-bold">Card One</h3>
-              <p class="text-gray-300">Some interesting content here</p>
-            </div>
-          </div>
-
-          <div class="scanline-container group overflow-hidden">
-            <div class="relative">
-              <img
-                src="/src/images/test_banner_image.webp"
-                alt="Card Two Image"
-                class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-br from-pink-500/30 via-purple-500/20 to-blue-500/40 mix-blend-multiply"
-              >
-              </div>
-            </div>
-            <div class="relative z-10 -mt-16 p-4 pt-20">
-              <h3 class="mb-2 text-xl font-bold">Card Two</h3>
-              <p class="text-gray-300">More engaging content</p>
-            </div>
-          </div>
-
-          <div class="scanline-container group overflow-hidden">
-            <div class="relative">
-              <img
-                src="/src/images/test_banner_image.webp"
-                alt="Card Three Image"
-                class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-br from-pink-500/30 via-purple-500/20 to-blue-500/40 mix-blend-multiply"
-              >
-              </div>
-            </div>
-            <div class="relative z-10 -mt-16 p-4 pt-20">
-              <h3 class="mb-2 text-xl font-bold">Card Three</h3>
-              <p class="text-gray-300">Additional content here</p>
-            </div>
-          </div>
-
-          <div class="scanline-container group overflow-hidden">
-            <div class="relative">
-              <img
-                src="/src/images/test_banner_image.webp"
-                alt="Card Four Image"
-                class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-br from-pink-500/30 via-purple-500/20 to-blue-500/40 mix-blend-multiply"
-              >
-              </div>
-            </div>
-            <div class="relative z-10 -mt-16 p-4 pt-20">
-              <h3 class="mb-2 text-xl font-bold">Card Four</h3>
-              <p class="text-gray-300">Even more content</p>
-            </div>
-          </div>
-
-          <div class="scanline-container group overflow-hidden">
-            <div class="relative">
-              <img
-                src="/src/images/test_banner_image.webp"
-                alt="Card Five Image"
-                class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-br from-pink-500/30 via-purple-500/20 to-blue-500/40 mix-blend-multiply"
-              >
-              </div>
-            </div>
-            <div class="relative z-10 -mt-16 p-4 pt-20">
-              <h3 class="mb-2 text-xl font-bold">Card Five</h3>
-              <p class="text-gray-300">Interesting stuff here</p>
-            </div>
-          </div>
-
-          <div class="scanline-container group overflow-hidden">
-            <div class="relative">
-              <img
-                src="/src/images/test_banner_image.webp"
-                alt="Card Six Image"
-                class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-br from-pink-500/30 via-purple-500/20 to-blue-500/40 mix-blend-multiply"
-              >
-              </div>
-            </div>
-            <div class="relative z-10 -mt-16 p-4 pt-20">
-              <h3 class="mb-2 text-xl font-bold">Card Six</h3>
-              <p class="text-gray-300">Final card content</p>
-            </div>
-          </div>
+            ))
+          }
         </div>
       </div>
+
+      <!-- Full-screen Dialogs -->
+      {cards.map((card) => <CardDialog {...card} />)}
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Add click handlers to all cards
+        const cards = document.querySelectorAll("[data-card]")
+        cards.forEach((card) => {
+          card.addEventListener("click", () => {
+            const cardId = card.getAttribute("data-card")
+            if (cardId) {
+              openDialog(cardId)
+            }
+          })
+        })
+
+        // Add click handlers to all close buttons
+        const closeButtons = document.querySelectorAll("[data-close]")
+        closeButtons.forEach((button) => {
+          button.addEventListener("click", (e) => {
+            e.stopPropagation() // Prevent event from bubbling up
+            const dialogId = button.getAttribute("data-close")
+            if (dialogId) {
+              closeDialog(dialogId)
+            }
+          })
+        })
+
+        // Add keyboard support for closing dialogs
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            const openDialog = document.querySelector(
+              "dialog[open]"
+            ) as HTMLDialogElement
+            if (openDialog) {
+              openDialog.close()
+              document.body.style.overflow = "auto"
+            }
+          }
+        })
+      })
+
+      function openDialog(id) {
+        const dialog = document.getElementById(id) as HTMLDialogElement
+        if (dialog) {
+          dialog.showModal()
+          document.body.style.overflow = "hidden"
+        }
+      }
+
+      function closeDialog(id) {
+        const dialog = document.getElementById(id) as HTMLDialogElement
+        if (dialog) {
+          dialog.close()
+          document.body.style.overflow = "auto"
+        }
+      }
+
+      // Close dialog when clicking outside
+      document.addEventListener("click", (e) => {
+        const dialogs = document.querySelectorAll("dialog")
+        dialogs.forEach((dialog) => {
+          const dialogElement = dialog as HTMLDialogElement
+          const rect = dialogElement.getBoundingClientRect()
+          const isInDialog =
+            rect.top <= e.clientY &&
+            e.clientY <= rect.top + rect.height &&
+            rect.left <= e.clientX &&
+            e.clientX <= rect.left + rect.width
+          if (dialogElement.open && !isInDialog) {
+            dialogElement.close()
+            document.body.style.overflow = "auto"
+          }
+        })
+      })
+    </script>
   </body><style>
     /* Marquee animation */
     .animate-marquee {
@@ -375,7 +412,6 @@ import bgImage from "../images/bg-image.jpeg"
     /* Scanline container matching glitch-wrapper style */
     .scanline-container {
       position: relative;
-      padding: 1.25rem;
       color: white;
       background: rgba(0, 0, 0, 0.2);
     }
@@ -401,6 +437,115 @@ import bgImage from "../images/bg-image.jpeg"
     .scanline-container > * {
       position: relative;
       z-index: 2;
+    }
+
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      border: none;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal::backdrop {
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-content {
+      width: 100%;
+      height: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.8);
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-content::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        #ff00ff,
+        #00ffff,
+        transparent
+      );
+      animation: borderGlow 3s linear infinite;
+      z-index: 10;
+    }
+
+    @keyframes borderGlow {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .modal img {
+      width: 100%;
+      height: 50vh;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Add animation for dialog */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    dialog[open] {
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    /* Modal content specific styles */
+    .modal-scanline {
+      position: relative;
+      color: white;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-scanline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .modal-scanline > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .modal-text {
+      padding: 2rem;
     }
   </style>
 </html>

@@ -1,0 +1,79 @@
+---
+interface Props {
+  id: string
+  title: string
+  content: string
+  imageSrc: string
+  imageAlt: string
+}
+
+const { id, title, content, imageSrc, imageAlt } = Astro.props
+---
+
+<dialog
+  id={id}
+  class="animate-fadeIn fixed inset-0 h-full max-h-full w-full max-w-full border-none bg-black/90 p-0"
+>
+  <div
+    class="before:animate-borderGlow relative mx-auto h-full w-full max-w-[1200px] overflow-y-auto bg-black/80 before:absolute before:left-0 before:right-0 before:top-0 before:z-10 before:h-[2px] before:content-['']"
+  >
+    <img
+      src={imageSrc}
+      alt={imageAlt}
+      class="block h-[50vh] w-full object-cover"
+    />
+    <div class="scanline-container p-5">
+      <h2 class="mb-4 text-3xl font-bold">{title}</h2>
+      <p class="text-gray-300">{content}</p>
+      <button
+        data-close={id}
+        class="glitch-button mt-8 border-4 border-gray-700 border-l-gray-500 border-t-gray-500 bg-white/10 px-6 py-2 text-white hover:bg-black"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  /* Custom backdrop styles - can't be done with Tailwind */
+  .modal::backdrop {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Animation keyframes - can't be done with pure Tailwind */
+  @keyframes borderGlow {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Custom animation classes */
+  .animate-borderGlow {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      #ff00ff,
+      #00ffff,
+      transparent
+    );
+    animation: borderGlow 3s linear infinite;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out;
+  }
+</style>
