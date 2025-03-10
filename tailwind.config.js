@@ -24,6 +24,25 @@ export default {
           width: "100%",
           overflowX: "hidden",
         },
+        li: {
+          listStyleType: "none",
+          position: "relative",
+          paddingLeft: "1.5em",
+          marginBottom: "0.5em",
+          "&:before": {
+            content: "'>'",
+            position: "absolute",
+            left: "0",
+            color: "#ffffff",
+            fontWeight: "bold",
+            transform: "scaleX(0.7)",
+          },
+          "&:hover::before": {
+            color: "#6366f1",
+            transform: "scaleX(0.7) translateX(2px)",
+            transition: "transform 0.2s ease-in-out, color 0.2s ease-in-out",
+          },
+        },
       })
     },
     function addBlogPostStyles({ addComponents }) {
@@ -54,16 +73,6 @@ export default {
           p: {
             marginBottom: "1.5em",
             lineHeight: "1.65",
-          },
-          li: {
-            listStyleType: "none", // Remove default bullets
-            paddingLeft: "0.5em",
-            marginBottom: "0.25em",
-            "&:before": {
-              content: "'☆'", // Custom bullet symbol
-              marginRight: "0.5em", // Space between bullet and text
-              // color: "#e74c3c", // Color for the bullet symbol
-            },
           },
           blockquote: {
             fontStyle: "italic",
