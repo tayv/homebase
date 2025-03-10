@@ -46,7 +46,7 @@ export default {
           textDecoration: "underline",
           textUnderlineOffset: "4px",
           "&:hover": {
-            color: "#4f46e5", // Change to indigo-600 on hover
+            color: "#1d4ed8", // Change to blue-700 on hover
             cursor: "pointer",
           },
         },
