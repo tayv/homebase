@@ -50,6 +50,15 @@ export default {
             cursor: "pointer",
           },
         },
+        ".no-bullet-list": {
+          listStyle: "none",
+          "& > li": {
+            paddingLeft: "0",
+            "&::before": {
+              content: "none",
+            },
+          },
+        },
         ".markdown-content": {
           // color: "#4a5568", // gray-700
           h1: {
