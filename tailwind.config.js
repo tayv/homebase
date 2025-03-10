@@ -37,11 +37,6 @@ export default {
             fontWeight: "bold",
             transform: "scaleX(0.7)",
           },
-          "&:hover::before": {
-            color: "#6366f1",
-            transform: "scaleX(0.7) translateX(2px)",
-            transition: "transform 0.2s ease-in-out, color 0.2s ease-in-out",
-          },
         },
       })
     },
