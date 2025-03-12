@@ -98,7 +98,7 @@ const cards = [
       </div>
 
       <!-- marquee starts -->
-      <div class="relative w-full overflow-hidden py-4">
+      <div class="relative w-full overflow-hidden py-2">
         <div class="animate-marquee inline-flex">
           <ul class="flex gap-16 pr-16 text-lg">
             <li class="shrink-0 whitespace-nowrap">
@@ -146,7 +146,7 @@ const cards = [
       </div>
       <!-- marquee ends -->
 
-      <div class="flex w-full flex-col items-center gap-8 p-8">
+      <div class="flex w-full flex-col items-center gap-8">
         <!-- Overview starts -->
         <div class="flex w-full flex-col items-center gap-8 p-8">
           <div class="scanline-container w-full max-w-lg p-5">
@@ -621,6 +621,11 @@ const cards = [
         position: relative;
         color: white;
         background: rgba(0, 0, 0, 0.2);
+      }
+
+      /* Remove bottom margin from whitespace-nowrap elements */
+      .whitespace-nowrap {
+        margin-bottom: 0;
       }
 
       .modal-scanline::before {
