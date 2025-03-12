@@ -99,20 +99,48 @@ const cards = [
 
       <!-- marquee starts -->
       <div class="relative w-full overflow-hidden py-4">
-        <div class="animate-marquee flex w-[200%]">
-          <ul class="flex w-1/2 justify-around text-lg">
-            <li>prototypes &gt; slide decks</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
+        <div class="animate-marquee inline-flex">
+          <ul class="flex gap-16 pr-16 text-lg">
+            <li class="shrink-0 whitespace-nowrap">
+              i'm a senior product designer
+            </li>
+            <li class="shrink-0 whitespace-nowrap">
+              i've worked as an independent contributor and managed teams
+            </li>
+            <li class="shrink-0 whitespace-nowrap">
+              i do best collaborating closely with engineers and product
+              managers
+            </li>
+            <li class="shrink-0 whitespace-nowrap">
+              i can't stop thinking about ways to make everything better
+            </li>
+            <li class="shrink-0 whitespace-nowrap">
+              point me in a direction and i'll figure it out
+            </li>
+            <li class="shrink-0 whitespace-nowrap">
+              i believe in low ego and iteration
+            </li>
           </ul>
-          <ul class="flex w-1/2 justify-around text-lg">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
+          <ul class="flex gap-16 pr-16 text-lg">
+            <li class="shrink-0 whitespace-nowrap">
+              i'm a senior product designer
+            </li>
+            <li class="shrink-0 whitespace-nowrap">
+              i've worked as an independent contributor and managed teams
+            </li>
+            <li class="shrink-0 whitespace-nowrap">
+              i do best collaborating closely with engineers and product
+              managers
+            </li>
+            <li class="shrink-0 whitespace-nowrap">
+              i can't stop thinking about ways to make everything better
+            </li>
+            <li class="shrink-0 whitespace-nowrap">
+              point me in a direction and i'll figure it out
+            </li>
+            <li class="shrink-0 whitespace-nowrap">
+              i believe in low ego and iteration
+            </li>
           </ul>
         </div>
       </div>
@@ -339,7 +367,8 @@ const cards = [
     </div><style>
       /* Marquee animation */
       .animate-marquee {
-        animation: scroll 15s linear infinite;
+        animation: scroll 60s linear infinite;
+        min-width: 100%;
       }
 
       @keyframes scroll {
