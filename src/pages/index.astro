@@ -94,9 +94,12 @@ const cards = [
       class="relative z-10 flex min-h-screen flex-col items-center justify-center p-4"
     >
       <div class="glitch-wrapper">
-        <div class="glitch leading-tight" data-text="<taylor vanderhelm>">
+        <h1
+          class="glitch text-[30px] leading-tight sm:text-[40px]"
+          data-text="<taylor vanderhelm>"
+        >
           &lt;taylor vanderhelm&gt;
-        </div>
+        </h1>
       </div>
 
       <!-- marquee starts -->
@@ -144,7 +147,7 @@ const cards = [
 
       <div class="flex w-full flex-col items-center gap-8">
         <!-- Overview starts -->
-        <div class="flex w-full flex-col items-center gap-4 p-6 sm:gap-8">
+        <div class="flex w-full flex-col items-center gap-4 p-2 sm:gap-8">
           <div class="scanline-container w-full max-w-lg p-5">
             <h3 class="pb-2 text-lg font-semibold">What I'm up to</h3>
             <ul class="">
@@ -407,7 +410,6 @@ const cards = [
 
       .glitch {
         position: relative;
-        font-size: 40px;
         font-weight: bold;
         color: #ffffff;
         letter-spacing: 3px;
