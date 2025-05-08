@@ -83,12 +83,9 @@ const cards = [
   </head>
   <body class="font-['Courier'] font-mono text-white">
     <div class="fixed inset-0 -z-10">
-      <GlitchImage
-        src={bgImage}
-        alt="Pink clouds in a dreamy sky"
-        layers={9}
-        minSliceHeight={80}
-      />
+      <video autoplay loop muted playsinline class="h-full w-full object-cover">
+        <source src="/background.mp4" type="video/mp4" />
+      </video>
     </div>
     <div
       class="relative z-10 flex min-h-screen flex-col items-center justify-center p-4"
