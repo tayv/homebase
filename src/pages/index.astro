@@ -54,6 +54,12 @@ const cards = [
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- favicon start -->
     <link rel="icon" type="image/x-icon" href="./favicon.ico" />
     <link
@@ -81,11 +87,13 @@ const cards = [
     <title>Taylor Vanderhelm</title>
     <ViewTransitions />
   </head>
-  <body class="font-['Courier'] font-mono text-white">
+  <body class="font-['Raleway'] text-white">
     <div class="fixed inset-0 -z-10">
-      <video autoplay loop muted playsinline class="h-full w-full object-cover">
-        <source src="/background.mp4" type="video/mp4" />
-      </video>
+      <img
+        src="/background.png"
+        alt="Background"
+        class="h-full w-full object-cover"
+      />
     </div>
     <div
       class="relative z-10 flex min-h-screen flex-col items-center justify-center p-4"
@@ -165,6 +173,22 @@ const cards = [
                 in the IDE
               </li>
             </ul>
+            <h3 class="py-2 text-lg font-semibold">Work Examples</h3>
+            <ul class="">
+              <li>
+                <a
+                  class="generic-link"
+                  href="https://prototyping-939024.gitlab.io/"
+                  >Duo context menu prototype</a
+                > (Astro/React deployed on GitLab Pages)
+              </li><li>
+                <a
+                  class="generic-link"
+                  href="https://gitlab.com/gitlab-org/editor-extensions/meta/-/issues/125"
+                  >Duo design explorations</a
+                >
+              </li>
+            </ul>
 
             <h3 class="py-2 text-lg font-semibold">Previous</h3>
             <ul class="">
@@ -213,9 +237,14 @@ const cards = [
             <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
               <div class="scanline-container p-5">
                 <h4 class="mb-3 text-sm font-medium text-gray-300">WORK</h4>
-                <a class="generic-link" href="https://gitlab.com/tvanderhelm"
-                  >gitlab</a
-                >
+                <ul class="no-bullet-list">
+                  <li>
+                    <a
+                      class="generic-link"
+                      href="https://gitlab.com/tvanderhelm">gitlab</a
+                    >
+                  </li>
+                </ul>
               </div>
               <div class="scanline-container p-5">
                 <h4 class="mb-3 text-sm font-medium text-gray-300">PROJECTS</h4>
