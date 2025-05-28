@@ -46,7 +46,7 @@ export default {
           textDecoration: "underline",
           textUnderlineOffset: "4px",
           "&:hover": {
-            color: "#1d4ed8", // Change to blue-700 on hover
+            color: "#93c5fd", // Bright blue-300 that's very visible on dark backgrounds
             cursor: "pointer",
           },
         },
