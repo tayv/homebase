@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         recursive: ["Recursive", "sans-serif"],
+        mono: ["divenire-mono", "monospace"],
       },
       backgroundImage: {
         scanlines:

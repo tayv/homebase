@@ -3,694 +3,584 @@ import { ViewTransitions } from "astro:transitions"
 import GlitchImage from "../components/GlitchImage.astro"
 import CardDialog from "../components/CardDialog.astro"
 import bgImage from "../images/bg-image.jpeg"
-
-const cards = [
-  {
-    id: "card1",
-    title: "Card One",
-    content: "Some interesting content here",
-    imageSrc: "/src/images/test_banner_image.webp",
-    imageAlt: "Card One Image",
-  },
-  {
-    id: "card2",
-    title: "Card Two",
-    content: "More engaging content",
-    imageSrc: "/src/images/test_banner_image.webp",
-    imageAlt: "Card Two Image",
-  },
-  {
-    id: "card3",
-    title: "Card Three",
-    content: "Additional content here",
-    imageSrc: "/src/images/test_banner_image.webp",
-    imageAlt: "Card Three Image",
-  },
-  {
-    id: "card4",
-    title: "Card Four",
-    content: "Even more content",
-    imageSrc: "/src/images/test_banner_image.webp",
-    imageAlt: "Card Four Image",
-  },
-  {
-    id: "card5",
-    title: "Card Five",
-    content: "Interesting stuff here",
-    imageSrc: "/src/images/test_banner_image.webp",
-    imageAlt: "Card Five Image",
-  },
-  {
-    id: "card6",
-    title: "Card Six",
-    content: "Final card content",
-    imageSrc: "/src/images/test_banner_image.webp",
-    imageAlt: "Card Six Image",
-  },
-]
+import ChevronsDown from "../components/ChevronsDown.tsx"
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- favicon start -->
-    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="./apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="./favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="./favicon-16x16.png"
-    />
-    <link rel="manifest" href="./site.webmanifest" />
-    <!-- favicon end -->
+    <link rel="stylesheet" href="https://use.typekit.net/xze5sjk.css" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#5c84a3" />
     <title>Taylor Vanderhelm</title>
     <ViewTransitions />
   </head>
-  <body class="font-['Raleway'] text-white">
-    <div class="fixed inset-0 -z-10">
-      <img
-        src="/background.png"
-        alt="Background"
-        class="h-full w-full object-cover"
-      />
-    </div>
-    <div
-      class="relative z-10 flex min-h-screen flex-col items-center justify-center p-4"
-    >
-      <div class="">
-        <h1
-          class="glitch text-[30px] leading-tight sm:text-[40px]"
-          data-text="<taylor vanderhelm>"
+  <body class="font-['divenire-mono','sans-serif'] text-white">
+    <div class="h-screen w-full snap-y snap-mandatory overflow-y-scroll">
+      <!-- Section 1: Hero with background -->
+      <section
+        class="relative flex h-screen w-full snap-start items-center justify-center"
+      >
+        <img
+          src="/background.png"
+          alt="Background"
+          class="absolute inset-0 z-0 h-full w-full object-cover"
+        />
+        <!-- Blur overlay -->
+        <div class="z-5 absolute inset-0 backdrop-blur-sm"></div>
+        <div
+          class="relative z-10 flex h-full w-full flex-col items-center justify-center"
         >
-          &lt;taylor vanderhelm&gt;
-        </h1>
-      </div>
-
-      <!-- marquee starts -->
-      <div class="relative w-full overflow-hidden py-2">
-        <div class="animate-marquee inline-flex">
-          <ul class="flex gap-16 pr-16 text-lg">
-            <li class="shrink-0 whitespace-nowrap">
-              I'm a senior product designer
-            </li>
-            <li class="shrink-0 whitespace-nowrap">
-              I've worked as an independent contributor and managed teams
-            </li>
-            <li class="shrink-0 whitespace-nowrap">
-              I enjoy co-creating with engineers and product managers
-            </li>
-
-            <li class="shrink-0 whitespace-nowrap">
-              Point me in a direction and I'll figure it out
-            </li>
-            <li class="shrink-0 whitespace-nowrap">
-              I believe in low ego and iteration
-            </li>
-          </ul>
-          <ul class="flex gap-16 pr-16 text-lg">
-            <li class="shrink-0 whitespace-nowrap">
-              I'm a senior product designer
-            </li>
-            <li class="shrink-0 whitespace-nowrap">
-              I've worked as an independent contributor and managed teams
-            </li>
-            <li class="shrink-0 whitespace-nowrap">
-              I enjoy co-creating with engineers and product managers
-            </li>
-
-            <li class="shrink-0 whitespace-nowrap">
-              Point me in a direction and I'll figure it out
-            </li>
-            <li class="shrink-0 whitespace-nowrap">
-              I believe in low ego and iteration
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- marquee ends -->
-
-      <div class="flex w-full flex-col items-center gap-8">
-        <!-- Overview starts -->
-        <div class="flex w-full flex-col items-center gap-4 p-2 sm:gap-8">
-          <div class="scanline-container w-full max-w-lg p-5">
-            <h3 class="pb-2 text-lg font-semibold">What I'm up to</h3>
-            <ul class="">
-              <li>
-                Helping integrate <a
-                  class="generic-link"
-                  href="https://about.gitlab.com/gitlab-duo/">GitLab Duo</a
-                > (generative AI + agents) into developer workflows with the
-                <a
-                  class="generic-link"
-                  href="https://handbook.gitlab.com/handbook/engineering/development/dev/create/editor-extensions/"
-                  >Editor Extensions team</a
-                > at GitLab.
-              </li>
-            </ul>
-            <h3 class="py-2 text-lg font-semibold">Work Examples</h3>
-            <ul class="">
-              <li>
-                <a
-                  class="generic-link"
-                  href="https://prototyping-939024.gitlab.io/"
-                  >GitLab Duo context menu prototype</a
-                > (Astro/React deployed on GitLab Pages)
-              </li><li>
-                <a
-                  class="generic-link"
-                  href="https://gitlab.com/gitlab-org/editor-extensions/meta/-/issues/195"
-                  >Rethinking GitLab Duo</a
-                > for the IDE
-              </li><li>
-                <a
-                  class="generic-link"
-                  href="https://gitlab.com/gitlab-org/editor-extensions/meta/-/issues/125"
-                  >GitLab design explorations</a
-                >
-              </li>
-            </ul>
-
-            <h3 class="py-2 text-lg font-semibold">Previous</h3>
-            <ul class="">
-              <li>
-                Cloud Development Environments and browser-based IDEs (GitLab <a
-                  class="generic-link"
-                  href="https://about.gitlab.com/direction/create/remote_development/workspaces/"
-                  >Workspaces</a
-                > and <a
-                  class="generic-link"
-                  href="https://about.gitlab.com/direction/create/remote_development/web_ide/"
-                >
-                  Web IDE</a
-                >)
-              </li>
-              <li>Enterprise security scanning tools (Synopsys)</li>
-              <li>Automated legal contracts (LegalTech SAAS)</li>
-            </ul>
-          </div>
-
-          <!-- newsletter signup starts -->
-          <!-- <div class="scanline-container w-full max-w-lg p-5">
-            <h3 class="text-center">Join the newsletter</h3>
-            <label for="email" class="block text-sm font-medium text-gray-300"
-              >Email</label
-            >
-            <div class="flex w-full flex-col gap-1 sm:flex-row">
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                class="block w-full min-w-36 border-4 border-gray-700 border-l-gray-500 border-t-gray-500 bg-black p-2 text-white focus:border-blue-500 focus:ring-blue-500 sm:min-w-72"
-                placeholder="you@example.com"
-              />
-              <button
-                type="submit"
-                class="glitch-button block w-full border-4 border-gray-700 border-l-gray-500 border-t-gray-500 bg-white/10 p-2 text-white hover:bg-black focus:border-blue-500 focus:ring-blue-500 sm:max-w-24"
-                >Submit</button
-              >
-            </div>
-          </div> -->
-
-          <!-- secondary content starts -->
-          <div class="w-full max-w-lg">
-            <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
-              <div class="scanline-container p-5">
-                <h4
-                  class="mb-3 text-xs font-medium uppercase tracking-wider text-gray-300"
-                >
-                  WORK
-                </h4>
-                <ul class="no-bullet-list">
-                  <li>
-                    <a
-                      class="generic-link"
-                      href="https://gitlab.com/tvanderhelm">gitlab</a
-                    >
-                  </li>
-                </ul>
-              </div>
-              <div class="scanline-container p-5">
-                <h4
-                  class="mb-3 text-xs font-medium uppercase tracking-wider text-gray-300"
-                >
-                  PROJECTS
-                </h4>
-                <ul class="no-bullet-list">
-                  <li>
-                    <a class="generic-link" href="https://github.com/tayv"
-                      >github</a
-                    >
-                  </li>
-                  <li>
-                    <a class="generic-link" href="https://github.com/tayv"
-                      >parkadoo</a
-                    >
-                  </li>
-
-                  <li>
-                    <a
-                      class="generic-link"
-                      href="https://bubblegumui.vercel.app/">bubblegum ui</a
-                    >
-                  </li>
-                </ul>
-              </div>
-              <div class="scanline-container p-5">
-                <h4
-                  class="mb-3 text-xs font-medium uppercase tracking-wider text-gray-300"
-                >
-                  CONTACT
-                </h4>
-                <ul class="no-bullet-list">
-                  <li>
-                    <a
-                      class="generic-link"
-                      href="https://linkedin.com/in/taylorvanderhelm"
-                      >linkedin</a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card Grid -->
-          <!-- <div
-            class="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3"
+          <h1
+            class="text-md w-full break-words px-2 text-center font-[divenire,sans-serif] font-bold uppercase tracking-widest text-white drop-shadow-lg sm:text-xl"
           >
-            {
-              cards.map((card) => (
-                <div
-                  class="scanline-container group cursor-pointer overflow-hidden p-0"
-                  data-card={card.id}
-                >
-                  <div class="relative">
-                    <img
-                      src={card.imageSrc}
-                      alt={card.imageAlt}
-                      class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <div class="absolute inset-0 bg-gradient-to-br from-pink-500/30 via-purple-500/20 to-blue-500/40 mix-blend-multiply" />
-                  </div>
-                  <div class="relative z-10 -mt-16 p-4 pt-20">
-                    <h3 class="mb-2 text-xl font-bold">{card.title}</h3>
-                    <p class="text-gray-300">{card.content}</p>
-                  </div>
-                </div>
-              ))
-            }
+            taylor vanderhelm
+          </h1>
+          <div
+            class="mt-2 flex w-full max-w-96 flex-col items-center justify-center gap-2 text-pretty px-6 font-[divenire,sans-serif] text-sm font-light leading-5 tracking-widest"
+          >
+            <div class="text-md w-full text-center text-white">
+              <em>DESIGNER noun(1)</em>&nbsp; ◦ &nbsp;A PERSON WHO DEVISES OR
+              EXECUTES DESIGNS, ESPECIALLY ONE WHO CREATES FORMS, STRUCTURES,
+              AND PATTERNS, AS FOR WORKS OF ART OR MACHINES.
+            </div>
+            <div class="font-regular text-md w-full text-center text-white">
+              <em>DESIGNER noun(2)</em>&nbsp; ◦ &nbsp;A SCHEMER, INTRIGUER, OR
+              PLOTTER.
+            </div>
+          </div>
+          <!-- marquee starts -->
+          <!-- <div class="relative w-full overflow-hidden py-2">
+            <div class="animate-marquee inline-flex">
+              <ul class="flex gap-16 pr-16 text-lg">
+                <li class="shrink-0 whitespace-nowrap">
+                  I'm a senior product designer
+                </li>
+                <li class="shrink-0 whitespace-nowrap">
+                  I've worked as an independent contributor and managed teams
+                </li>
+                <li class="shrink-0 whitespace-nowrap">
+                  I enjoy co-creating with engineers and product managers
+                </li>
+                <li class="shrink-0 whitespace-nowrap">
+                  Point me in a direction and I'll figure it out
+                </li>
+                <li class="shrink-0 whitespace-nowrap">
+                  I believe in low ego and iteration
+                </li>
+              </ul>
+              <ul class="flex gap-16 pr-16 text-lg">
+                <li class="shrink-0 whitespace-nowrap">
+                  I'm a senior product designer
+                </li>
+                <li class="shrink-0 whitespace-nowrap">
+                  I've worked as an independent contributor and managed teams
+                </li>
+                <li class="shrink-0 whitespace-nowrap">
+                  I enjoy co-creating with engineers and product managers
+                </li>
+                <li class="shrink-0 whitespace-nowrap">
+                  Point me in a direction and I'll figure it out
+                </li>
+                <li class="shrink-0 whitespace-nowrap">
+                  I believe in low ego and iteration
+                </li>
+              </ul>
+            </div>
           </div> -->
+          <!-- marquee ends -->
+          <!-- ChevronsDown at the bottom center -->
+          <div
+            class="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center"
+          >
+            <ChevronsDown client:visible />
+          </div>
         </div>
+      </section>
+      <!-- Section 2: Main content with custom dark background -->
+      <section
+        class="flex h-screen w-full snap-start flex-col items-center justify-between text-white"
+        style="background-color: rgb(17, 17, 17);"
+      >
+        <div
+          class="flex w-full flex-1 flex-col items-center justify-center p-4"
+        >
+          <div
+            class="mx-auto w-full max-w-3xl font-mono text-sm font-light md:text-base"
+          >
+            <!-- What I'm up to -->
+            <div class="mb-6 md:mb-8">
+              <h2
+                class="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-100 md:text-sm"
+              >
+                Currently
+              </h2>
+              <ul
+                class="list-none text-pretty border-l-[1.5px] border-gray-600 text-xs font-thin leading-tight text-gray-200 md:text-sm"
+                style="list-style: none;"
+              >
+                <style>
+                  ul li::before {
+                    content: none !important;
+                  }
+                </style>
+                <li class="mb-1">
+                  Crafting <a
+                    class="text-blue-400 underline"
+                    href="https://about.gitlab.com/gitlab-duo/">GitLab Duo</a
+                  > [generative AI + agents] experiences across the software development
+                  lifecycle with the <a
+                    class="text-blue-400 underline"
+                    href="https://about.gitlab.com/direction/ai-powered/"
+                    >AI-Powered team</a
+                  > at GitLab.
+                </li>
+              </ul>
+            </div>
+            <!-- Work Examples Table -->
+            <div class="mb-6 mt-8 md:mb-8 md:mt-0">
+              <h2
+                class="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-100 md:text-sm"
+              >
+                Work Examples
+              </h2>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-thin md:text-sm">
+                  <thead>
+                    <tr
+                      class="border-b border-gray-700 font-light uppercase tracking-widest text-gray-400"
+                    >
+                      <th class="py-1 pr-2 text-xs font-light">Year</th>
+                      <th class="py-1 pr-2 text-xs font-light">Description</th>
+                      <th class="py-1 pl-4 pr-2 text-xs font-light md:pl-0"
+                        >Company</th
+                      >
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="divide-y divide-gray-800 font-thin tracking-tight"
+                  >
+                    <tr>
+                      <td class="py-1 pr-2 text-gray-300">2024</td>
+                      <td class="py-1 pr-2"
+                        ><a
+                          class="text-blue-400 underline"
+                          href="https://prototyping-939024.gitlab.io/"
+                          >GitLab Duo context menu prototype</a
+                        > [Astro + React + Tailwind + GitLab Pages<a
+                          class="align-super text-xs text-blue-400"
+                          href="https://gitlab.com/tvanderhelm/prototyping"
+                          >[1]</a
+                        >]</td
+                      >
+                      <td class="py-1 pl-4 md:pl-0">GitLab</td>
+                    </tr>
+                    <tr>
+                      <td class="py-1 pr-2 text-gray-300">2023</td>
+                      <td class="py-1 pr-2"
+                        ><a
+                          class="text-blue-400 underline"
+                          href="https://gitlab.com/gitlab-org/editor-extensions/meta/-/issues/195"
+                          >Rethinking GitLab Duo</a
+                        > for the IDE</td
+                      >
+                      <td class="py-1 pl-4 md:pl-0">GitLab</td>
+                    </tr>
+                    <tr>
+                      <td class="py-1 pr-2 text-gray-300">2022+</td>
+                      <td class="py-1 pr-2"
+                        ><a
+                          class="text-blue-400 underline"
+                          href="https://gitlab.com/gitlab-org/editor-extensions/meta/-/issues/125"
+                          >GitLab design explorations</a
+                        ></td
+                      >
+                      <td class="py-1 pl-4 md:pl-0">GitLab</td>
+                    </tr>
+                    <tr></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Previous Section -->
+            <div class="mb-6 md:mb-8">
+              <div class="mb-6 md:mb-8">
+                <h2
+                  class="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-100 md:text-sm"
+                >
+                  Previous
+                </h2>
+                <ul
+                  class="list-none text-pretty border-l-[1.5px] border-gray-600 text-xs font-thin leading-tight text-gray-200 md:text-sm"
+                  style="list-style: none;"
+                >
+                  <style>
+                    ul li::before {
+                      content: none !important;
+                    }
+                  </style>
+                  <li class="mb-1">
+                    Cloud Development Environments and browser-based IDEs
+                    [GitLab <a
+                      class="text-blue-400 underline"
+                      href="https://about.gitlab.com/direction/create/remote_development/workspaces/"
+                      >Workspaces</a
+                    > and <a
+                      class="text-blue-400 underline"
+                      href="https://about.gitlab.com/direction/create/remote_development/web_ide/"
+                      >Web IDE</a
+                    >]
+                  </li>
+                  <li class="mb-1">
+                    Enterprise security scanning tools [Synopsys]
+                  </li>
+                  <li class="mb-1">
+                    Automated legal contracts [LegalTech SAAS]
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Footer band -->
+          <footer
+            class="mt-4 w-full px-2 py-4 text-sm font-light uppercase tracking-widest text-gray-200 sm:mt-6"
+          >
+            <div
+              class="mx-auto flex max-w-4xl items-center justify-center gap-4"
+            >
+              <a
+                class="text-blue-400 underline transition-colors hover:text-blue-300"
+                href="https://gitlab.com/tvanderhelm"
+              >
+                gitlab
+              </a>
+              <span class="text-gray-400"> | </span>
+              <a
+                class="text-blue-400 underline transition-colors hover:text-blue-300"
+                href="https://github.com/tayv"
+              >
+                github
+              </a>
+              <span class="text-gray-400"> | </span>
+              <a
+                class="text-blue-400 underline transition-colors hover:text-blue-300"
+                href="https://linkedin.com/in/taylorvanderhelm"
+              >
+                linkedin
+              </a>
+            </div>
+          </footer>
+        </div>
+      </section>
 
-        <!-- Full-screen Dialogs -->
-        {cards.map((card) => <CardDialog {...card} />)}
-      </div>
+      <style>
+        /* Marquee animation */
+        .animate-marquee {
+          animation: scroll 60s linear infinite;
+          min-width: 100%;
+        }
 
-      <script>
-        document.addEventListener("DOMContentLoaded", () => {
-          // Add click handlers to all cards
-          const cards = document.querySelectorAll("[data-card]")
-          cards.forEach((card) => {
-            card.addEventListener("click", () => {
-              const cardId = card.getAttribute("data-card")
-              if (cardId) {
-                openDialog(cardId)
-              }
-            })
-          })
-
-          // Add click handlers to all close buttons
-          const closeButtons = document.querySelectorAll("[data-close]")
-          closeButtons.forEach((button) => {
-            button.addEventListener("click", (e) => {
-              e.stopPropagation() // Prevent event from bubbling up
-              const dialogId = button.getAttribute("data-close")
-              if (dialogId) {
-                closeDialog(dialogId)
-              }
-            })
-          })
-
-          // Add keyboard support for closing dialogs
-          document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-              const openDialog = document.querySelector(
-                "dialog[open]"
-              ) as HTMLDialogElement
-              if (openDialog) {
-                openDialog.close()
-                document.body.style.overflow = "auto"
-              }
-            }
-          })
-        })
-
-        function openDialog(id) {
-          const dialog = document.getElementById(id) as HTMLDialogElement
-          if (dialog) {
-            dialog.showModal()
-            document.body.style.overflow = "hidden"
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
           }
         }
 
-        function closeDialog(id) {
-          const dialog = document.getElementById(id) as HTMLDialogElement
-          if (dialog) {
-            dialog.close()
-            document.body.style.overflow = "auto"
+        /* Glitch effect */
+        .glitch-wrapper {
+          width: 100%;
+          height: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          position: relative;
+          margin-bottom: 12px;
+        }
+
+        .glitch-wrapper::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px
+          );
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        .glitch {
+          position: relative;
+          font-weight: bold;
+          color: #ffffff;
+          letter-spacing: 3px;
+          text-shadow:
+            0.05em 0 0 rgba(179, 255, 0, 0.75),
+            -0.025em -0.05em 0 rgba(149, 65, 228, 0.75),
+            0.025em 0.05em 0 rgba(19, 238, 250, 0.852);
+        }
+
+        .glitch::before {
+          content: attr(data-text);
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 50%;
+          text-shadow: -2px 0 #ff0000;
+          animation: noise-1 3s infinite;
+          opacity: 0.75;
+          clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+          transform: translateX(0);
+        }
+
+        .glitch::after {
+          content: attr(data-text);
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          text-shadow: -2px 0 #9333ea;
+          animation: noise-2 3s infinite;
+          opacity: 0.75;
+          clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+          transform: translateX(0);
+        }
+
+        @keyframes noise-1 {
+          0%,
+          85%,
+          100% {
+            transform: translateX(0);
+          }
+          86% {
+            transform: translateX(-5px);
+          }
+          87% {
+            transform: translateX(5px);
+          }
+          88% {
+            transform: translateX(-3px);
+          }
+          89% {
+            transform: translateX(0);
           }
         }
 
-        // Close dialog when clicking outside
-        document.addEventListener("click", (e) => {
-          const dialogs = document.querySelectorAll("dialog")
-          dialogs.forEach((dialog) => {
-            const dialogElement = dialog as HTMLDialogElement
-            const rect = dialogElement.getBoundingClientRect()
-            const isInDialog =
-              rect.top <= e.clientY &&
-              e.clientY <= rect.top + rect.height &&
-              rect.left <= e.clientX &&
-              e.clientX <= rect.left + rect.width
-            if (dialogElement.open && !isInDialog) {
-              dialogElement.close()
-              document.body.style.overflow = "auto"
-            }
-          })
-        })
-      </script>
-    </div><style>
-      /* Marquee animation */
-      .animate-marquee {
-        animation: scroll 60s linear infinite;
-        min-width: 100%;
-      }
-
-      @keyframes scroll {
-        0% {
-          transform: translateX(0);
+        @keyframes noise-2 {
+          0%,
+          85%,
+          100% {
+            transform: translateX(0);
+          }
+          86% {
+            transform: translateX(5px);
+          }
+          87% {
+            transform: translateX(-5px);
+          }
+          88% {
+            transform: translateX(3px);
+          }
+          89% {
+            transform: translateX(0);
+          }
         }
-        100% {
-          transform: translateX(-50%);
+
+        /* Glitch button effect */
+        .glitch-button {
+          position: relative;
+          transition: all 0.2s ease;
         }
-      }
 
-      /* Glitch effect */
-      .glitch-wrapper {
-        width: 100%;
-        height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        position: relative;
-        margin-bottom: 12px;
-      }
-
-      .glitch-wrapper::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.15),
-          rgba(0, 0, 0, 0.15) 1px,
-          transparent 1px,
-          transparent 2px
-        );
-        pointer-events: none;
-        z-index: 2;
-      }
-
-      .glitch {
-        position: relative;
-        font-weight: bold;
-        color: #ffffff;
-        letter-spacing: 3px;
-        text-shadow:
-          0.05em 0 0 rgba(179, 255, 0, 0.75),
-          -0.025em -0.05em 0 rgba(149, 65, 228, 0.75),
-          0.025em 0.05em 0 rgba(19, 238, 250, 0.852);
-      }
-
-      .glitch::before {
-        content: attr(data-text);
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 50%;
-        text-shadow: -2px 0 #ff0000;
-        animation: noise-1 3s infinite;
-        opacity: 0.75;
-        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-        transform: translateX(0);
-      }
-
-      .glitch::after {
-        content: attr(data-text);
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        text-shadow: -2px 0 #9333ea;
-        animation: noise-2 3s infinite;
-        opacity: 0.75;
-        clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-        transform: translateX(0);
-      }
-
-      @keyframes noise-1 {
-        0%,
-        85%,
-        100% {
-          transform: translateX(0);
+        .glitch-button:hover {
+          text-shadow:
+            0.05em 0 0 rgba(255, 0, 0, 0.75),
+            -0.025em -0.05em 0 rgba(147, 51, 234, 0.75),
+            0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
         }
-        86% {
-          transform: translateX(-5px);
+
+        .glitch-button:hover span {
+          animation: glitch 500ms infinite;
         }
-        87% {
-          transform: translateX(5px);
+
+        /* Text shadow utility for better contrast */
+        .text-shadow {
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
-        88% {
-          transform: translateX(-3px);
+
+        /* Scanline container matching glitch-wrapper style */
+        .scanline-container {
+          position: relative;
+          color: white;
+          background: rgba(14, 49, 74, 0.3);
         }
-        89% {
-          transform: translateX(0);
+
+        .scanline-container::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px
+          );
+          pointer-events: none;
+          z-index: 2;
         }
-      }
 
-      @keyframes noise-2 {
-        0%,
-        85%,
-        100% {
-          transform: translateX(0);
+        .scanline-container > * {
+          position: relative;
+          z-index: 2;
         }
-        86% {
-          transform: translateX(5px);
+
+        /* Modal styles */
+        .modal {
+          position: fixed;
+          border: none;
+          padding: 0;
+          width: 100%;
+          height: 100%;
+          max-width: 100%;
+          max-height: 100%;
+          background: rgba(0, 0, 0, 0.9);
         }
-        87% {
-          transform: translateX(-5px);
+
+        .modal::backdrop {
+          background: rgba(0, 0, 0, 0.9);
+          backdrop-filter: blur(4px);
         }
-        88% {
-          transform: translateX(3px);
+
+        .modal-content {
+          width: 100%;
+          height: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          background: rgba(0, 0, 0, 0.8);
+          overflow-y: auto;
+          position: relative;
         }
-        89% {
-          transform: translateX(0);
+
+        .modal-content::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            #ff00ff,
+            #00ffff,
+            transparent
+          );
+          animation: borderGlow 3s linear infinite;
+          z-index: 10;
         }
-      }
 
-      /* Glitch button effect */
-      .glitch-button {
-        position: relative;
-        transition: all 0.2s ease;
-      }
-
-      .glitch-button:hover {
-        text-shadow:
-          0.05em 0 0 rgba(255, 0, 0, 0.75),
-          -0.025em -0.05em 0 rgba(147, 51, 234, 0.75),
-          0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
-      }
-
-      .glitch-button:hover span {
-        animation: glitch 500ms infinite;
-      }
-
-      /* Text shadow utility for better contrast */
-      .text-shadow {
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-      }
-
-      /* Scanline container matching glitch-wrapper style */
-      .scanline-container {
-        position: relative;
-        color: white;
-        background: rgba(14, 49, 74, 0.3);
-      }
-
-      .scanline-container::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.15),
-          rgba(0, 0, 0, 0.15) 1px,
-          transparent 1px,
-          transparent 2px
-        );
-        pointer-events: none;
-        z-index: 2;
-      }
-
-      .scanline-container > * {
-        position: relative;
-        z-index: 2;
-      }
-
-      /* Modal styles */
-      .modal {
-        position: fixed;
-        border: none;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        max-width: 100%;
-        max-height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-      }
-
-      .modal::backdrop {
-        background: rgba(0, 0, 0, 0.9);
-        backdrop-filter: blur(4px);
-      }
-
-      .modal-content {
-        width: 100%;
-        height: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        background: rgba(0, 0, 0, 0.8);
-        overflow-y: auto;
-        position: relative;
-      }
-
-      .modal-content::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          #ff00ff,
-          #00ffff,
-          transparent
-        );
-        animation: borderGlow 3s linear infinite;
-        z-index: 10;
-      }
-
-      @keyframes borderGlow {
-        0% {
-          transform: translateX(-100%);
+        @keyframes borderGlow {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
         }
-        100% {
-          transform: translateX(100%);
+
+        .modal img {
+          width: 100%;
+          height: 50vh;
+          object-fit: cover;
+          display: block;
         }
-      }
 
-      .modal img {
-        width: 100%;
-        height: 50vh;
-        object-fit: cover;
-        display: block;
-      }
-
-      /* Add animation for dialog */
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
+        /* Add animation for dialog */
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
-        to {
-          opacity: 1;
+
+        dialog[open] {
+          animation: fadeIn 0.3s ease-out;
         }
-      }
 
-      dialog[open] {
-        animation: fadeIn 0.3s ease-out;
-      }
+        /* Modal content specific styles */
+        .modal-scanline {
+          position: relative;
+          color: white;
+          background: rgba(0, 0, 0, 0.2);
+        }
 
-      /* Modal content specific styles */
-      .modal-scanline {
-        position: relative;
-        color: white;
-        background: rgba(0, 0, 0, 0.2);
-      }
+        /* Remove bottom margin from whitespace-nowrap elements */
+        .whitespace-nowrap {
+          margin-bottom: 0;
+        }
 
-      /* Remove bottom margin from whitespace-nowrap elements */
-      .whitespace-nowrap {
-        margin-bottom: 0;
-      }
+        .modal-scanline::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px
+          );
+          pointer-events: none;
+          z-index: 2;
+        }
 
-      .modal-scanline::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.15),
-          rgba(0, 0, 0, 0.15) 1px,
-          transparent 1px,
-          transparent 2px
-        );
-        pointer-events: none;
-        z-index: 2;
-      }
+        .modal-scanline > * {
+          position: relative;
+          z-index: 2;
+        }
 
-      .modal-scanline > * {
-        position: relative;
-        z-index: 2;
-      }
+        .modal-text {
+          padding: 2rem;
+        }
 
-      .modal-text {
-        padding: 2rem;
-      }
-    </style>
+        /* Hyperlink underline and color customization */
+        a {
+          color: inherit;
+          text-decoration: underline;
+          text-decoration-color: #6b7280; /* Tailwind gray-500 */
+          text-underline-offset: 2px;
+          transition:
+            color 0.2s,
+            text-decoration-color 0.2s;
+        }
+        a:hover {
+          color: #6b7280; /* Tailwind gray-500 */
+          text-decoration-color: #6b7280; /* Tailwind gray-500 */
+        }
+      </style>
+    </div>
   </body>
 </html>
