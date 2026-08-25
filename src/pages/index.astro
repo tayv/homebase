@@ -1,21 +1,18 @@
 ---
-import { ViewTransitions } from "astro:transitions"
-import GlitchImage from "../components/GlitchImage.astro"
-import CardDialog from "../components/CardDialog.astro"
-import bgImage from "../images/bg-image.jpeg"
+import { ClientRouter } from "astro:transitions"
 import ChevronsDown from "../components/ChevronsDown.tsx"
+import "../styles/global.css"
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="https://use.typekit.net/xze5sjk.css" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#5c84a3" />
     <title>Taylor Vanderhelm</title>
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body class="font-['divenire-mono','sans-serif'] text-white">
     <div class="h-screen w-full snap-y snap-mandatory overflow-y-scroll">
