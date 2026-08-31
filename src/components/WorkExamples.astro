@@ -1,0 +1,480 @@
+---
+const workExamples = [
+  {
+    year: "2025",
+    title: "AI Catalog for GitLab Duo Agent Platform",
+    company: "GitLab",
+    caption:
+      "A community-driven catalog experience for discovering and extending GitLab Duo Agent Platform.",
+    links: [
+      {
+        label: "Read the announcement",
+        href: "https://about.gitlab.com/blog/gitlab-duo-agent-platform-public-beta/#a-community-driven-future",
+      },
+    ],
+  },
+  {
+    year: "2025",
+    title: "GitLab Duo context menu prototype",
+    company: "GitLab",
+    caption:
+      "An interactive prototype built with Astro, React, Tailwind, and GitLab Pages.",
+    links: [
+      {
+        label: "View prototype",
+        href: "https://prototyping-939024.gitlab.io/",
+      },
+      {
+        label: "View source",
+        href: "https://gitlab.com/tvanderhelm/prototyping",
+      },
+    ],
+  },
+  {
+    year: "2025",
+    title: "Rethinking GitLab Duo for the IDE",
+    company: "GitLab",
+    caption:
+      "A product direction exploring how GitLab Duo can become a more useful part of IDE workflows.",
+    links: [
+      {
+        label: "Read the proposal",
+        href: "https://gitlab.com/gitlab-org/editor-extensions/meta/-/issues/195",
+      },
+    ],
+  },
+  {
+    year: "2024",
+    title: "GitLab design explorations",
+    company: "GitLab",
+    caption:
+      "Early product and interaction explorations for GitLab editor extensions.",
+    links: [
+      {
+        label: "View explorations",
+        href: "https://gitlab.com/gitlab-org/editor-extensions/meta/-/issues/125",
+      },
+    ],
+  },
+]
+---
+
+<work-examples>
+  <div class="work-table" role="list" aria-label="Work examples">
+    <div class="work-table__header" aria-hidden="true">
+      <span>Year</span>
+      <span>Company</span>
+      <span>Description</span>
+      <span aria-hidden="true"></span>
+    </div>
+
+    {
+      workExamples.map((example, index) => {
+        const panelId = `work-example-${index + 1}`
+
+        return (
+          <div class="work-table__item" role="listitem">
+            <button
+              class="work-table__trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls={panelId}
+            >
+              <span class="work-table__year">{example.year}</span>
+              <span>{example.company}</span>
+              <span class="work-table__title">{example.title}</span>
+              <span class="work-table__icon" aria-hidden="true" />
+            </button>
+
+            <div class="work-table__panel" id={panelId} hidden>
+              <figure>
+                <div
+                  class={`work-table__placeholder work-table__placeholder--${index + 1}`}
+                  role="img"
+                  aria-label={`${example.title} image placeholder`}
+                >
+                  <span>Image / video placeholder</span>
+                </div>
+                <figcaption>
+                  <p>{example.caption}</p>
+                  <div class="work-table__links">
+                    {example.links.map((link) => (
+                      <a href={link.href}>{link.label} ↗</a>
+                    ))}
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        )
+      })
+    }
+  </div>
+</work-examples>
+
+<script>
+  class WorkExamples extends HTMLElement {
+    private actionId = 0
+
+    private openPanel(panel: HTMLElement, actionId: number) {
+      panel.removeAttribute("hidden")
+      panel.dataset.state = "closed"
+
+      requestAnimationFrame(() => {
+        if (actionId === this.actionId && panel.dataset.state === "closed") {
+          panel.dataset.state = "open"
+        }
+      })
+    }
+
+    private closePanel(panel: HTMLElement) {
+      panel.dataset.state = "closed"
+
+      if (panel.hasAttribute("hidden")) return Promise.resolve()
+
+      const figure = panel.querySelector<HTMLElement>("figure")
+      if (!figure) {
+        panel.setAttribute("hidden", "")
+        return Promise.resolve()
+      }
+
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
+      const transitionProperty = reducedMotion ? "opacity" : "transform"
+      const fallbackDuration = reducedMotion ? 170 : 200
+
+      return new Promise<void>((resolve) => {
+        let timeoutId: number
+
+        const finish = () => {
+          figure.removeEventListener("transitionend", handleTransitionEnd)
+          window.clearTimeout(timeoutId)
+
+          if (panel.dataset.state === "closed") {
+            panel.setAttribute("hidden", "")
+          }
+
+          resolve()
+        }
+
+        const handleTransitionEnd = (event: TransitionEvent) => {
+          if (
+            event.target === figure &&
+            event.propertyName === transitionProperty
+          ) {
+            finish()
+          }
+        }
+
+        figure.addEventListener("transitionend", handleTransitionEnd)
+        timeoutId = window.setTimeout(finish, fallbackDuration)
+      })
+    }
+
+    connectedCallback() {
+      const triggers = this.querySelectorAll<HTMLButtonElement>(
+        ".work-table__trigger"
+      )
+
+      triggers.forEach((trigger) => {
+        if (trigger.dataset.bound === "true") return
+        trigger.dataset.bound = "true"
+
+        trigger.addEventListener("click", async () => {
+          const actionId = ++this.actionId
+          const isOpen = trigger.getAttribute("aria-expanded") === "true"
+          const panelId = trigger.getAttribute("aria-controls")
+          const selectedPanel = panelId
+            ? this.querySelector<HTMLElement>(`#${panelId}`)
+            : null
+
+          triggers.forEach((otherTrigger) => {
+            otherTrigger.setAttribute("aria-expanded", "false")
+          })
+
+          if (isOpen) {
+            if (selectedPanel) await this.closePanel(selectedPanel)
+            return
+          }
+
+          trigger.setAttribute("aria-expanded", "true")
+
+          const visiblePanels = Array.from(
+            this.querySelectorAll<HTMLElement>(
+              ".work-table__panel:not([hidden])"
+            )
+          ).filter((panel) => panel !== selectedPanel)
+
+          await Promise.all(
+            visiblePanels.map((panel) => this.closePanel(panel))
+          )
+
+          if (actionId !== this.actionId || !selectedPanel) return
+          this.openPanel(selectedPanel, actionId)
+        })
+      })
+    }
+  }
+
+  if (!customElements.get("work-examples")) {
+    customElements.define("work-examples", WorkExamples)
+  }
+</script>
+
+<style>
+  work-examples {
+    --column-gap: 1.5rem;
+    --motion-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --motion-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    display: block;
+    min-width: 38rem;
+  }
+
+  .work-table {
+    width: 100%;
+    font-weight: 200;
+    letter-spacing: -0.025em;
+  }
+
+  .work-table__header,
+  .work-table__trigger {
+    display: grid;
+    grid-template-columns: 2.5rem 3.75rem minmax(0, 1fr) 1rem;
+    column-gap: var(--column-gap);
+    align-items: center;
+    width: 100%;
+    text-align: left;
+  }
+
+  .work-table__header {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgb(55 65 81);
+    color: rgb(156 163 175);
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .work-table__item {
+    border-bottom: 1px solid rgb(31 41 55);
+    transition: opacity 180ms ease;
+  }
+
+  .work-table:has(.work-table__trigger:is(:hover, :focus-visible))
+    .work-table__item:not(
+      :has(.work-table__trigger:is(:hover, :focus-visible))
+    ) {
+    opacity: 0.3;
+  }
+
+  .work-table__trigger {
+    appearance: none;
+    padding: 0.35rem 0;
+    border: 0;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .work-table__trigger:hover,
+  .work-table__trigger:focus-visible,
+  .work-table__trigger[aria-expanded="true"] {
+    color: #fff;
+  }
+
+  .work-table__trigger:focus-visible {
+    outline: 1px solid rgb(96 165 250);
+    outline-offset: 3px;
+  }
+
+  .work-table__year {
+    color: rgb(209 213 219);
+  }
+
+  .work-table__trigger:is(:hover, :focus-visible, [aria-expanded="true"])
+    .work-table__year {
+    color: inherit;
+  }
+
+  .work-table__title {
+    text-decoration: none;
+  }
+
+  .work-table__icon {
+    position: relative;
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .work-table__icon::before,
+  .work-table__icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.65rem;
+    height: 1px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+    transition:
+      transform 180ms var(--motion-ease-in-out),
+      opacity 120ms var(--motion-ease-out);
+  }
+
+  .work-table__icon::after {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(90deg) scaleX(1);
+  }
+
+  .work-table__trigger[aria-expanded="true"] .work-table__icon::before {
+    transform: translate(-50%, -50%) scaleX(1.12);
+  }
+
+  .work-table__trigger[aria-expanded="true"] .work-table__icon::after {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(180deg) scaleX(0.65);
+  }
+
+  .work-table__panel {
+    padding: 0.5rem 0 1rem calc(6.25rem + (var(--column-gap) * 2));
+  }
+
+  .work-table__panel[hidden] {
+    display: none;
+  }
+
+  .work-table__panel > figure {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    clip-path: inset(0 0 6% 0);
+    transition:
+      transform 160ms var(--motion-ease-out),
+      opacity 160ms var(--motion-ease-out),
+      clip-path 160ms var(--motion-ease-out);
+  }
+
+  .work-table__panel[data-state="open"] > figure {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0);
+    transition-duration: 220ms;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  .work-table__placeholder {
+    position: relative;
+    display: grid;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    place-items: center;
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.38);
+    background:
+      linear-gradient(
+        135deg,
+        transparent 49.5%,
+        rgba(255, 255, 255, 0.09) 50%,
+        transparent 50.5%
+      ),
+      linear-gradient(
+        45deg,
+        transparent 49.5%,
+        rgba(255, 255, 255, 0.06) 50%,
+        transparent 50.5%
+      ),
+      #232323;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .work-table__placeholder::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .work-table__placeholder--2 {
+    background-color: #20282d;
+  }
+
+  .work-table__placeholder--3 {
+    background-color: #2b2824;
+  }
+
+  .work-table__placeholder--4 {
+    background-color: #25232b;
+  }
+
+  figcaption {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.65rem;
+    color: rgb(209 213 219);
+    font-size: 0.75rem;
+    line-height: 1.45;
+  }
+
+  figcaption p {
+    max-width: 34rem;
+    margin: 0;
+  }
+
+  .work-table__links {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.75rem;
+  }
+
+  .work-table__links a {
+    color: rgb(96 165 250);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 47.99rem) {
+    work-examples {
+      --column-gap: 0.75rem;
+      min-width: 0;
+    }
+
+    .work-table__header,
+    .work-table__trigger {
+      grid-template-columns: 2.5rem 3.75rem minmax(0, 1fr) 0.75rem;
+    }
+
+    .work-table__panel {
+      padding-left: 0;
+    }
+
+    figcaption {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .work-table__links {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .work-table__panel > figure {
+      clip-path: none;
+      transform: none;
+      transition: opacity 140ms var(--motion-ease-out);
+    }
+
+    .work-table__icon::before,
+    .work-table__icon::after {
+      transition: opacity 120ms var(--motion-ease-out);
+    }
+  }
+</style>

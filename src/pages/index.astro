@@ -1,7 +1,11 @@
 ---
 import { ClientRouter } from "astro:transitions"
 import ChevronsDown from "../components/ChevronsDown.tsx"
+import InfiniteImageCarousel from "../components/InfiniteImageCarousel.astro"
+import WorkExamples from "../components/WorkExamples.astro"
 import "../styles/global.css"
+
+const heroTitle = "Taylor Vanderhelm"
 ---
 
 <html lang="en">
@@ -26,26 +30,50 @@ import "../styles/global.css"
           class="absolute inset-0 z-0 h-full w-full object-cover"
         />
         <!-- Blur overlay -->
-        <div class="z-5 absolute inset-0 backdrop-blur-sm"></div>
+        <div class="absolute inset-0 z-5 backdrop-blur-sm"></div>
         <div
           class="relative z-10 flex h-full w-full flex-col items-center justify-center"
         >
-          <h1
-            class="text-md w-full break-words px-2 text-center font-[divenire,sans-serif] font-bold uppercase tracking-widest text-white drop-shadow-lg sm:text-xl"
-          >
-            taylor vanderhelm
-          </h1>
           <div
-            class="mt-2 flex w-full max-w-96 flex-col items-center justify-center gap-2 text-pretty px-6 font-[divenire,sans-serif] text-sm font-light leading-5 tracking-widest"
+            class="hero-copy flex w-full flex-col items-center justify-center"
           >
-            <div class="text-md w-full text-center text-white">
-              <em>DESIGNER noun(1)</em>&nbsp; ◦ &nbsp;A PERSON WHO DEVISES OR
-              EXECUTES DESIGNS, ESPECIALLY ONE WHO CREATES FORMS, STRUCTURES,
-              AND PATTERNS, AS FOR WORKS OF ART OR MACHINES.
-            </div>
-            <div class="font-regular text-md w-full text-center text-white">
-              <em>DESIGNER noun(2)</em>&nbsp; ◦ &nbsp;A SCHEMER, INTRIGUER, OR
-              PLOTTER.
+            <h1
+              aria-label={heroTitle}
+              class="text-md w-full px-2 text-center font-[divenire,sans-serif] font-bold tracking-widest break-words text-white uppercase drop-shadow-lg sm:text-xl"
+            >
+              {heroTitle}
+            </h1>
+            <div
+              class="mt-2 flex w-full max-w-96 flex-col items-center justify-center gap-2 px-6 font-[divenire,sans-serif] text-sm leading-5 font-light tracking-widest text-pretty"
+            >
+              <div class="text-md w-full text-center text-white">
+                <em>DESIGNER noun(1)</em>&nbsp; ◦ &nbsp;A PERSON WHO DEVISES OR
+                EXECUTES DESIGNS, ESPECIALLY ONE WHO CREATES FORMS, STRUCTURES,
+                AND PATTERNS, AS FOR WORKS OF ART OR MACHINES.
+              </div>
+              <div class="font-regular text-md w-full text-center text-white">
+                <em>DESIGNER noun(2)</em>&nbsp; ◦ &nbsp;A SCHEMER, INTRIGUER, OR
+                PLOTTER.
+              </div>
+              <nav
+                aria-label="Social profiles"
+                class="mt-4 flex items-center justify-center gap-4 text-sm font-light tracking-widest text-white uppercase"
+              >
+                <a
+                  class="hero-social-link whitespace-nowrap underline transition-colors"
+                  href="https://linkedin.com/in/taylorvanderhelm">linkedin</a
+                >
+                <span aria-hidden="true">|</span>
+                <a
+                  class="hero-social-link whitespace-nowrap underline transition-colors"
+                  href="https://x.com/vantaylor_">X (Twitter)</a
+                >
+                <span aria-hidden="true">|</span>
+                <a
+                  class="hero-social-link whitespace-nowrap underline transition-colors"
+                  href="https://github.com/tayv">github</a
+                >
+              </nav>
             </div>
           </div>
           <!-- marquee starts -->
@@ -98,7 +126,7 @@ import "../styles/global.css"
       </section>
       <!-- Section 2: Main content with custom dark background -->
       <section
-        class="flex h-screen w-full snap-start flex-col items-center justify-between text-white"
+        class="flex min-h-screen w-full snap-start flex-col items-center justify-between text-white"
         style="background-color: rgb(17, 17, 17);"
       >
         <div
@@ -110,13 +138,12 @@ import "../styles/global.css"
             <!-- What I'm up to -->
             <div class="mb-6 md:mb-8">
               <h2
-                class="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-100 md:text-sm"
+                class="mb-2 text-xs font-semibold tracking-widest text-gray-100 uppercase md:text-sm"
               >
                 Currently
               </h2>
               <ul
-                class="list-none text-pretty border-l-[1.5px] border-gray-600 text-xs font-thin leading-tight text-gray-200 md:text-sm"
-                style="list-style: none;"
+                class="experience-list text-xs leading-tight font-thin text-pretty text-gray-200 md:text-sm"
               >
                 <style>
                   ul li::before {
@@ -124,167 +151,107 @@ import "../styles/global.css"
                   }
                 </style>
                 <li class="mb-1">
-                  Crafting <a
-                    class="text-blue-400 underline"
-                    href="https://about.gitlab.com/gitlab-duo/">GitLab Duo</a
-                  > [generative AI + agents] experiences across the software development
-                  lifecycle with the <a
-                    class="text-blue-400 underline"
-                    href="https://about.gitlab.com/direction/ai-powered/"
-                    >AI-Powered team</a
-                  > at GitLab.
+                  <span aria-hidden="true">–</span>
+                  <span>
+                    Founding product designer at Gero Labs building <a
+                      class="text-blue-400 underline"
+                      href="https://arceus.legal/">arceus.legal</a
+                    >, an AI-native law firm
+                  </span>
                 </li>
               </ul>
             </div>
             <!-- Work Examples Table -->
-            <div class="mb-6 mt-8 md:mb-8 md:mt-0">
+            <div class="mt-8 mb-6 md:mt-0 md:mb-8">
               <h2
-                class="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-100 md:text-sm"
+                class="mb-2 text-xs font-semibold tracking-widest text-gray-100 uppercase md:text-sm"
               >
                 Work Examples
               </h2>
-              <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs font-thin md:text-sm">
-                  <thead>
-                    <tr
-                      class="border-b border-gray-700 font-light uppercase tracking-widest text-gray-400"
-                    >
-                      <th class="py-1 pr-2 text-xs font-light">Year</th>
-                      <th class="py-1 pr-2 text-xs font-light">Description</th>
-                      <th class="py-1 pl-4 pr-2 text-xs font-light md:pl-0"
-                        >Company</th
-                      >
-                    </tr>
-                  </thead>
-                  <tbody
-                    class="divide-y divide-gray-800 font-thin tracking-tight"
-                  >
-                    <tr>
-                      <td class="py-1 pr-2 text-gray-300">2025</td>
-                      <td class="py-1 pr-2"
-                        ><a
-                          class="text-blue-400 underline"
-                          href="https://about.gitlab.com/blog/gitlab-duo-agent-platform-public-beta/#a-community-driven-future"
-                          >AI Catalog for GitLab Duo Agent Platform</a
-                        >
-                      </td>
-                      <td class="py-1 pl-4 md:pl-0">GitLab</td>
-                    </tr>
-                    <tr>
-                      <td class="py-1 pr-2 text-gray-300">2025</td>
-                      <td class="py-1 pr-2"
-                        ><a
-                          class="text-blue-400 underline"
-                          href="https://prototyping-939024.gitlab.io/"
-                          >GitLab Duo context menu prototype</a
-                        > [Astro + React + Tailwind + GitLab Pages<a
-                          class="align-super text-xs text-blue-400"
-                          href="https://gitlab.com/tvanderhelm/prototyping"
-                          >[1]</a
-                        >]</td
-                      >
-                      <td class="py-1 pl-4 md:pl-0">GitLab</td>
-                    </tr>
-                    <tr>
-                      <td class="py-1 pr-2 text-gray-300">2025</td>
-                      <td class="py-1 pr-2"
-                        ><a
-                          class="text-blue-400 underline"
-                          href="https://gitlab.com/gitlab-org/editor-extensions/meta/-/issues/195"
-                          >Rethinking GitLab Duo</a
-                        > for the IDE</td
-                      >
-                      <td class="py-1 pl-4 md:pl-0">GitLab</td>
-                    </tr>
-                    <tr>
-                      <td class="py-1 pr-2 text-gray-300">2024</td>
-                      <td class="py-1 pr-2"
-                        ><a
-                          class="text-blue-400 underline"
-                          href="https://gitlab.com/gitlab-org/editor-extensions/meta/-/issues/125"
-                          >GitLab design explorations</a
-                        ></td
-                      >
-                      <td class="py-1 pl-4 md:pl-0">GitLab</td>
-                    </tr>
-
-                    <tr></tr>
-                  </tbody>
-                </table>
+              <div class="overflow-x-auto pb-1">
+                <WorkExamples />
               </div>
             </div>
             <!-- Previous Section -->
             <div class="mb-6 md:mb-8">
               <div class="mb-6 md:mb-8">
                 <h2
-                  class="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-100 md:text-sm"
+                  class="mb-2 text-xs font-semibold tracking-widest text-gray-100 uppercase md:text-sm"
                 >
                   Previous
                 </h2>
                 <ul
-                  class="list-none text-pretty border-l-[1.5px] border-gray-600 text-xs font-thin leading-tight text-gray-200 md:text-sm"
-                  style="list-style: none;"
+                  class="experience-list text-xs leading-tight font-thin text-pretty text-gray-200 md:text-sm"
                 >
                   <style>
                     ul li::before {
                       content: none !important;
                     }
                   </style>
-                  <li class="mb-1">
-                    Cloud Development Environments and browser-based IDEs
-                    [GitLab <a
-                      class="text-blue-400 underline"
-                      href="https://about.gitlab.com/direction/create/remote_development/workspaces/"
-                      >Workspaces</a
-                    > and <a
-                      class="text-blue-400 underline"
-                      href="https://about.gitlab.com/direction/create/remote_development/web_ide/"
-                      >Web IDE</a
-                    >]
+                  <li class="mb-2">
+                    <span aria-hidden="true">–</span>
+                    <span>
+                      <a
+                        class="text-blue-400 underline"
+                        href="https://about.gitlab.com/gitlab-duo/"
+                        >GitLab Duo</a
+                      > [generative AI + agent platform] with the <a
+                        class="text-blue-400 underline"
+                        href="https://about.gitlab.com/direction/ai-powered/"
+                        >AI-Powered team</a
+                      > at GitLab
+                    </span>
                   </li>
-                  <li class="mb-1">
-                    Enterprise security scanning tools [Synopsys R&D]
+                  <li class="mb-2">
+                    <span aria-hidden="true">–</span>
+                    <span>
+                      Cloud Development Environments and browser-based IDEs
+                      [GitLab <a
+                        class="text-blue-400 underline"
+                        href="https://about.gitlab.com/direction/create/remote_development/workspaces/"
+                        >Workspaces</a
+                      > and <a
+                        class="text-blue-400 underline"
+                        href="https://about.gitlab.com/direction/create/remote_development/web_ide/"
+                        >Web IDE</a
+                      >]
+                    </span>
                   </li>
-                  <li class="mb-1">
-                    Automated legal contracts [LegalTech SAAS]
+                  <li class="mb-2">
+                    <span aria-hidden="true">–</span>
+                    <span
+                      >Enterprise security scanning tools [Synopsys R&D]</span
+                    >
+                  </li>
+                  <li class="mb-2">
+                    <span aria-hidden="true">–</span>
+                    <span>Automated legal contracts [LegalTech SaaS]</span>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
-          <!-- Footer band -->
-          <footer
-            class="mt-4 w-full px-2 py-4 text-sm font-light uppercase tracking-widest text-gray-200 sm:mt-6"
-          >
-            <div
-              class="mx-auto flex max-w-4xl items-center justify-center gap-4"
-            >
-              <a
-                class="text-blue-400 underline transition-colors hover:text-blue-300"
-                href="https://gitlab.com/tvanderhelm"
-              >
-                gitlab
-              </a>
-              <span class="text-gray-400"> | </span>
-              <a
-                class="text-blue-400 underline transition-colors hover:text-blue-300"
-                href="https://github.com/tayv"
-              >
-                github
-              </a>
-              <span class="text-gray-400"> | </span>
-              <a
-                class="text-blue-400 underline transition-colors hover:text-blue-300"
-                href="https://linkedin.com/in/taylorvanderhelm"
-              >
-                linkedin
-              </a>
-            </div>
-          </footer>
         </div>
+        <InfiniteImageCarousel />
       </section>
 
       <style>
+        .experience-list {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          padding-inline-start: 1rem;
+          list-style: none;
+        }
+
+        .experience-list > li {
+          display: grid;
+          grid-template-columns: 1rem minmax(0, 1fr);
+          column-gap: 0.5rem;
+          align-items: start;
+          padding-left: 0;
+        }
+
         /* Marquee animation */
         .animate-marquee {
           animation: scroll 60s linear infinite;

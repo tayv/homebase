@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useAnimation } from "framer-motion"
+import { motion, useAnimation, useReducedMotion } from "framer-motion"
 import type { Variants } from "framer-motion"
 import React from "react"
 
@@ -18,15 +18,19 @@ const chevronVariants: Variants = {
     opacity: 1,
     scale: 1,
   },
-  animate: {
-    y: [4, 0],
-    opacity: [0.3, 1],
+  loop: (index = 0) => ({
+    y: [0, 4, 0],
+    opacity: [1, 0.4, 1],
     scale: 1,
     transition: {
-      duration: 0.5,
-      ease: "easeOut",
+      duration: 0.65,
+      delay: index * 0.1,
+      times: [0, 0.45, 1],
+      ease: "easeInOut",
+      repeat: Infinity,
+      repeatDelay: 2.1,
     },
-  },
+  }),
   bounce: {
     scale: [1, 1.2, 0.95, 1.1, 1],
     transition: {
@@ -46,12 +50,27 @@ const ChevronsDown = ({
   ...svgProps
 }: ChevronsDownProps) => {
   const controls = useAnimation()
+  const shouldReduceMotion = useReducedMotion()
 
   React.useEffect(() => {
-    controls.start("animate").then(() => {
-      setTimeout(() => controls.start("normal"), 600)
-    })
-  }, [])
+    if (shouldReduceMotion) {
+      controls.start("normal")
+    } else {
+      controls.start("loop")
+    }
+
+    return () => controls.stop()
+  }, [controls, shouldReduceMotion])
+
+  const handleMouseEnter = async () => {
+    if (shouldReduceMotion) return
+    await controls.start("bounce")
+    controls.start("loop")
+  }
+
+  const handleMouseLeave = () => {
+    if (!shouldReduceMotion) controls.start("loop")
+  }
 
   const handleClick = () => {
     const section = document.querySelector(scrollTargetSelector)
@@ -72,10 +91,9 @@ const ChevronsDown = ({
         justifyContent: "center",
         background: "none",
         border: "none",
-        outline: "none",
       }}
-      onMouseEnter={() => controls.start("animate")}
-      onMouseLeave={() => controls.start("normal")}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       aria-label="Scroll to next section"
     >
@@ -97,7 +115,6 @@ const ChevronsDown = ({
           animate={controls}
           initial="normal"
           custom={0}
-          transition={{ delay: 0 }}
         />
         <motion.path
           d="m7 13 5 5 5-5"
@@ -105,7 +122,6 @@ const ChevronsDown = ({
           animate={controls}
           initial="normal"
           custom={1}
-          transition={{ delay: 0.1 }}
         />
       </svg>
     </button>

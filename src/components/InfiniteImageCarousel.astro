@@ -1,0 +1,139 @@
+---
+const placeholders = Array.from({ length: 10 }, (_, index) => ({
+  label: `Project image ${index + 1}`,
+  number: index + 1,
+  variant: (index % 5) + 1,
+}))
+---
+
+<div class="image-carousel" aria-label="Project image gallery">
+  <div class="image-carousel__track">
+    <div class="image-carousel__group">
+      {
+        placeholders.map(({ label, number, variant }) => (
+          <div
+            class={`image-carousel__placeholder image-carousel__placeholder--${variant}`}
+            role="img"
+            aria-label={`${label} placeholder`}
+          >
+            <span>{String(number).padStart(2, "0")}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="image-carousel__group" aria-hidden="true">
+      {
+        placeholders.map(({ number, variant }) => (
+          <div
+            class={`image-carousel__placeholder image-carousel__placeholder--${variant}`}
+          >
+            <span>{String(number).padStart(2, "0")}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .image-carousel {
+    --tile-width: clamp(7rem, 11vw, 10rem);
+    --tile-height: clamp(5rem, 8vw, 7.25rem);
+    --tile-gap: clamp(0.35rem, 0.6vw, 0.65rem);
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 0.5rem;
+  }
+
+  .image-carousel__track {
+    display: flex;
+    width: max-content;
+    animation: image-carousel-scroll 36s linear infinite;
+    will-change: transform;
+  }
+
+  .image-carousel__group {
+    display: flex;
+    flex-shrink: 0;
+    gap: var(--tile-gap);
+    padding-right: var(--tile-gap);
+  }
+
+  .image-carousel__placeholder {
+    position: relative;
+    width: var(--tile-width);
+    height: var(--tile-height);
+    flex-shrink: 0;
+    overflow: hidden;
+    background-color: #252525;
+  }
+
+  .image-carousel__placeholder::before,
+  .image-carousel__placeholder::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .image-carousel__placeholder::before {
+    background:
+      linear-gradient(
+        135deg,
+        transparent 48%,
+        rgba(255, 255, 255, 0.08) 49%,
+        rgba(255, 255, 255, 0.08) 51%,
+        transparent 52%
+      ),
+      linear-gradient(
+        45deg,
+        transparent 48%,
+        rgba(255, 255, 255, 0.05) 49%,
+        rgba(255, 255, 255, 0.05) 51%,
+        transparent 52%
+      );
+  }
+
+  .image-carousel__placeholder::after {
+    inset: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+  }
+
+  .image-carousel__placeholder span {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.4rem;
+    z-index: 1;
+    color: rgba(255, 255, 255, 0.38);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+  }
+
+  .image-carousel__placeholder--2 {
+    background-color: #303030;
+  }
+
+  .image-carousel__placeholder--3 {
+    background-color: #20262a;
+  }
+
+  .image-carousel__placeholder--4 {
+    background-color: #2b2926;
+  }
+
+  .image-carousel__placeholder--5 {
+    background-color: #242229;
+  }
+
+  @keyframes image-carousel-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .image-carousel__track {
+      animation-play-state: paused;
+    }
+  }
+</style>
