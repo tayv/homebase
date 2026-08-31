@@ -1,11 +1,30 @@
 ---
 const workExamples = [
   {
+    year: "2026",
+    title: "Arceus",
+    company: "Gero Labs",
+    caption: ["More details coming soon."],
+    links: [],
+  },
+  {
+    year: "2026",
+    title: "Vector",
+    company: "Gero Labs",
+    caption: ["More details coming soon."],
+    links: [],
+  },
+  {
     year: "2025",
     title: "AI Catalog for GitLab Duo Agent Platform",
     company: "GitLab",
-    caption:
-      "A community-driven catalog experience for discovering and extending GitLab Duo Agent Platform.",
+    caption: [
+      "Lead designer for the GitLab Duo Agent Platform catalog. The catalog enabled teams to build and share custom agents and workflows.",
+    ],
+    image: "/DuoAgentPlatform_BetaLaunch.png",
+    imageAlt: "GitLab Duo Agent Platform public beta announcement",
+    imageWidth: 3434,
+    imageHeight: 1778,
     links: [
       {
         label: "Read the announcement",
@@ -17,8 +36,13 @@ const workExamples = [
     year: "2025",
     title: "GitLab Duo context menu prototype",
     company: "GitLab",
-    caption:
-      "An interactive prototype built with Astro, React, Tailwind, and GitLab Pages.",
+    caption: [
+      "An interactive prototype built with Astro, React, Tailwind, and GitLab Pages. The goal was to streamline Duo context menu interactions within the IDE.",
+      "After 3 iterations the prototype saved the average usability tester ~5 seconds per context source interaction over our existing behavior.",
+    ],
+    video: "/DuoContextMenuPrototype.mp4",
+    videoPoster: "/DuoContextMenuPrototypePlaceholder.png",
+    videoLabel: "GitLab Duo context menu prototype demonstration",
     links: [
       {
         label: "View prototype",
@@ -34,8 +58,13 @@ const workExamples = [
     year: "2025",
     title: "Rethinking GitLab Duo for the IDE",
     company: "GitLab",
-    caption:
-      "A product direction exploring how GitLab Duo can become a more useful part of IDE workflows.",
+    caption: [
+      "Design proposal exploring how GitLab Duo could become a more useful part of IDE workflows. At this time AI in the IDE was still new to the industry and interactions patterns were murky.",
+    ],
+    image: "/GitLabDuo_IDE_Proposal.png",
+    imageAlt: "GitLab Duo IDE design proposal",
+    imageWidth: 1932,
+    imageHeight: 1562,
     links: [
       {
         label: "Read the proposal",
@@ -47,8 +76,13 @@ const workExamples = [
     year: "2024",
     title: "GitLab design explorations",
     company: "GitLab",
-    caption:
-      "Early product and interaction explorations for GitLab editor extensions.",
+    caption: [
+      "Examples of my thought process while working through early product and interaction explorations for GitLab",
+    ],
+    image: "/Duo_Design_Explorations.png",
+    imageAlt: "GitLab Duo product and interaction design explorations",
+    imageWidth: 3450,
+    imageHeight: 1792,
     links: [
       {
         label: "View explorations",
@@ -63,7 +97,7 @@ const workExamples = [
   <div class="work-table" role="list" aria-label="Work examples">
     <div class="work-table__header" aria-hidden="true">
       <span>Year</span>
-      <span>Company</span>
+      <span class="work-table__company">Company</span>
       <span>Description</span>
       <span aria-hidden="true"></span>
     </div>
@@ -81,22 +115,49 @@ const workExamples = [
               aria-controls={panelId}
             >
               <span class="work-table__year">{example.year}</span>
-              <span>{example.company}</span>
+              <span class="work-table__company">{example.company}</span>
               <span class="work-table__title">{example.title}</span>
               <span class="work-table__icon" aria-hidden="true" />
             </button>
 
             <div class="work-table__panel" id={panelId} hidden>
               <figure>
-                <div
-                  class={`work-table__placeholder work-table__placeholder--${index + 1}`}
-                  role="img"
-                  aria-label={`${example.title} image placeholder`}
-                >
-                  <span>Image / video placeholder</span>
-                </div>
+                {example.video ? (
+                  <video
+                    class="work-table__media"
+                    src={example.video}
+                    poster={example.videoPoster}
+                    aria-label={example.videoLabel}
+                    preload="metadata"
+                    muted
+                    loop
+                    playsinline
+                    controls
+                  />
+                ) : example.image ? (
+                  <img
+                    class="work-table__media"
+                    src={example.image}
+                    alt={example.imageAlt}
+                    width={example.imageWidth}
+                    height={example.imageHeight}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div
+                    class={`work-table__placeholder work-table__placeholder--${index + 1}`}
+                    role="img"
+                    aria-label={`${example.title} image placeholder`}
+                  >
+                    <span>Image / video placeholder</span>
+                  </div>
+                )}
                 <figcaption>
-                  <p>{example.caption}</p>
+                  <div class="work-table__caption">
+                    {example.caption.map((paragraph) => (
+                      <p>{paragraph}</p>
+                    ))}
+                  </div>
                   <div class="work-table__links">
                     {example.links.map((link) => (
                       <a href={link.href}>{link.label} ↗</a>
@@ -123,11 +184,19 @@ const workExamples = [
       requestAnimationFrame(() => {
         if (actionId === this.actionId && panel.dataset.state === "closed") {
           panel.dataset.state = "open"
+
+          if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            panel
+              .querySelector<HTMLVideoElement>("video")
+              ?.play()
+              .catch(() => {})
+          }
         }
       })
     }
 
     private closePanel(panel: HTMLElement) {
+      panel.querySelector<HTMLVideoElement>("video")?.pause()
       panel.dataset.state = "closed"
 
       if (panel.hasAttribute("hidden")) return Promise.resolve()
@@ -225,6 +294,8 @@ const workExamples = [
 <style>
   work-examples {
     --column-gap: 1.5rem;
+    --year-column: 3.5rem;
+    --company-column: 6rem;
     --motion-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --motion-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
     display: block;
@@ -240,7 +311,9 @@ const workExamples = [
   .work-table__header,
   .work-table__trigger {
     display: grid;
-    grid-template-columns: 2.5rem 3.75rem minmax(0, 1fr) 1rem;
+    grid-template-columns:
+      var(--year-column) var(--company-column) minmax(0, 1fr)
+      1rem;
     column-gap: var(--column-gap);
     align-items: center;
     width: 100%;
@@ -294,6 +367,10 @@ const workExamples = [
     color: rgb(209 213 219);
   }
 
+  .work-table__company {
+    white-space: nowrap;
+  }
+
   .work-table__trigger:is(:hover, :focus-visible, [aria-expanded="true"])
     .work-table__year {
     color: inherit;
@@ -339,7 +416,8 @@ const workExamples = [
   }
 
   .work-table__panel {
-    padding: 0.5rem 0 1rem calc(6.25rem + (var(--column-gap) * 2));
+    padding: 0.5rem 0 1rem
+      calc(var(--year-column) + var(--company-column) + (var(--column-gap) * 2));
   }
 
   .work-table__panel[hidden] {
@@ -365,6 +443,12 @@ const workExamples = [
 
   figure {
     margin: 0;
+  }
+
+  .work-table__media {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   .work-table__placeholder {
@@ -424,6 +508,12 @@ const workExamples = [
     line-height: 1.45;
   }
 
+  .work-table__caption {
+    display: grid;
+    max-width: 34rem;
+    gap: 0.65rem;
+  }
+
   figcaption p {
     max-width: 34rem;
     margin: 0;
@@ -443,12 +533,9 @@ const workExamples = [
   @media (max-width: 47.99rem) {
     work-examples {
       --column-gap: 0.75rem;
+      --year-column: 2.75rem;
+      --company-column: 5.5rem;
       min-width: 0;
-    }
-
-    .work-table__header,
-    .work-table__trigger {
-      grid-template-columns: 2.5rem 3.75rem minmax(0, 1fr) 0.75rem;
     }
 
     .work-table__panel {
