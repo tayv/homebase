@@ -18,14 +18,14 @@
     "kill:dev": "lsof -ti :4321 | xargs kill -9"
   },
   "dependencies": {
-    "@astrojs/mdx": "^8.1.1",
-    "@astrojs/react": "^7.1.1",
-    "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.4.2",
-    "framer-motion": "^14.7.1",
+    "@astrojs/mdx": "^8.1.2",
+    "@astrojs/react": "^7.1.2",
+    "@tailwindcss/vite": "^4.3.4",
+    "astro": "^7.4.5",
+    "framer-motion": "^14.9.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
